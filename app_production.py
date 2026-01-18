@@ -46,9 +46,13 @@ def add_cors_headers(response):
 @app.route('/<path:path>', methods=['OPTIONS'])
 def handle_options(path=None):
     return '', 200
-# Create directories
-for folder in [app.config['UPLOAD_FOLDER'], app.config['OUTPUT_FOLDER'], app.config['SPECTROGRAMS']]:
-    os.makedirs(folder, exist_ok=True)
+# Create directories on startup
+def create_directories():
+    for folder in [app.config['UPLOAD_FOLDER'], app.config['OUTPUT_FOLDER'], app.config['SPECTROGRAMS']]:
+        os.makedirs(folder, exist_ok=True)
+
+# Initialize directories
+create_directories()
 
 ALLOWED_EXTENSIONS = {'wav', 'mp3', 'ogg', 'flac', 'm4a'}
 

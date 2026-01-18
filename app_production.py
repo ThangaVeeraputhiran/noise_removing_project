@@ -18,11 +18,8 @@ from datetime import datetime
 import traceback
 import json
 
-# Import production system
-from production_system import AdvancedSpeechEnhancer, NoiseClassifier, AudioProcessor, Logger
-from enhanced_speech_processor import EnhancedSpeechProcessor
-from ultra_speech_enhancer import UltraSpeechEnhancer
-from extreme_noise_eliminator import ExtremeNoiseEliminator
+# Import production system - ONLY if actually needed (lazy import in routes)
+# This prevents blocking on startup
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB max
@@ -117,6 +114,12 @@ def upload_test():
 def process():
     """Process audio file with enhanced algorithm"""
     try:
+        # Import heavy modules only when needed
+        from production_system import AdvancedSpeechEnhancer, NoiseClassifier, AudioProcessor, Logger
+        from enhanced_speech_processor import EnhancedSpeechProcessor
+        from ultra_speech_enhancer import UltraSpeechEnhancer
+        from extreme_noise_eliminator import ExtremeNoiseEliminator
+        
         if 'audio_file' not in request.files:
             return jsonify({'error': 'No file uploaded'}), 400
         

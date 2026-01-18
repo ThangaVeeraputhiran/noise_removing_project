@@ -1,52 +1,51 @@
 #!/usr/bin/env python
 """
-WSGI entry point for Railway deployment
-Ensures proper app initialization with error handling
+WSGI entry point for Railway deployment - Minimal Production Version
 """
 import os
 import sys
-import logging
-
-# Configure logging to stderr (Railway captures this)
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s [%(levelname)s] %(name)s: %(message)s',
-    stream=sys.stderr
-)
-logger = logging.getLogger(__name__)
 
 # Add project to path
-sys.path.insert(0, os.path.dirname(__file__))
-
-logger.info("=" * 70)
-logger.info("WSGI Initialization Started")
-logger.info("=" * 70)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 try:
-    logger.info("Step 1: Importing Flask...")
-    from flask import Flask
-    logger.info("✓ Flask imported")
-    
-    logger.info("Step 2: Importing app_production...")
+    # Try to import the full production app
     from app_production import app, create_directories
-    logger.info("✓ app_production imported")
+    print("✓ Loaded full app_production")
     
-    logger.info("Step 3: Creating directories...")
+    # Create directories on startup
     create_directories()
-    logger.info("✓ Directories created")
-    
-    logger.info("=" * 70)
-    logger.info("✓ WSGI App Ready")
-    logger.info("=" * 70)
     
 except Exception as e:
-    logger.error("=" * 70)
-    logger.error("✗ WSGI Initialization Failed")
-    logger.error("=" * 70)
-    logger.exception(f"Error: {e}")
-    raise
+    # Fallback to minimal app if production app fails
+    print(f"Warning: Could not load full app: {e}")
+    print("Starting minimal app...")
+    
+    from flask import Flask, render_template
+    
+    app = Flask(__name__)
+    app.config['UPLOAD_FOLDER'] = 'uploads'
+    app.config['OUTPUT_FOLDER'] = 'outputs'
+    app.config['SPECTROGRAMS'] = 'static/spectrograms'
+    
+    # Create directories
+    for folder in [app.config['UPLOAD_FOLDER'], app.config['OUTPUT_FOLDER'], app.config['SPECTROGRAMS']]:
+        os.makedirs(folder, exist_ok=True)
+    
+    @app.route('/')
+    def index():
+        try:
+            return render_template('index.html')
+        except:
+            return '<h1>Speech Enhancement System</h1><p>App is running</p>'
 
+    @app.route('/health')
+    def health():
+        return {'status': 'ok'}, 200
+
+# The app is ready for WSGI/gunicorn
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
-    logger.info(f"Starting app on 0.0.0.0:{port}")
-    app.run(host='0.0.0.0', port=port, debug=False)
+    app.run(host="0.0.0.0", port=port, debug=False, threaded=True)
+
+

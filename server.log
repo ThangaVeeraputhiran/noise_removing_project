@@ -34,3 +34,7 @@ Press CTRL+C to quit
 127.0.0.1 - - [18/Jan/2026 02:32:39] "GET /static/spectrograms/20260118_023237_spectrogram.png?t=1768703559169 HTTP/1.1" 200 -
 127.0.0.1 - - [18/Jan/2026 02:32:39] "GET /download/20260118_023237_enhanced.wav HTTP/1.1" 206 -
 127.0.0.1 - - [18/Jan/2026 02:33:27] "GET /download/20260118_023237_enhanced.wav HTTP/1.1" 200 -
+127.0.0.1 - - [18/Jan/2026 02:52:26] "GET /download/20260118_023237_enhanced.wav HTTP/1.1" 200 -
+127.0.0.1 - - [18/Jan/2026 02:52:49] "POST /process HTTP/1.1" 200 -
+127.0.0.1 - - [18/Jan/2026 02:52:49] "GET /static/spectrograms/20260118_025248_spectrogram.png?t=1768704769489 HTTP/1.1" 200 -
+127.0.0.1 - - [18/Jan/2026 02:52:49] "GET /download/20260118_025248_enhanced.wav HTTP/1.1" 206 -

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Enhancement - Connection Test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .status-box {
+            background: #f0f4f8;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .status-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .status-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .status-icon.ok {
+            background: #4CAF50;
+        }
+        .status-icon.loading {
+            background: #2196F3;
+            animation: spin 1s linear infinite;
+        }
+        .status-icon.error {
+            background: #f44336;
+        }
+        .status-text {
+            flex: 1;
+        }
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            grid-column: 1 / -1;
+        }
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        .btn-secondary {
+            background: #f0f4f8;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+        .info-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 13px;
+            color: #856404;
+        }
+        .success-message {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #155724;
+            display: none;
+        }
+        .success-message.show {
+            display: block;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        code {
+            background: #f0f4f8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 Speech Enhancement</h1>
+        <p class="subtitle">System Connection Test</p>
+        
+        <div class="status-box">
+            <div class="status-item">
+                <div class="status-icon loading" id="serverIcon">⟳</div>
+                <div class="status-text">
+                    <strong>Server Status:</strong>
+                    <span id="serverStatus">Checking...</span>
+                </div>
+            </div>
+            <div class="status-item">
+                <div class="status-icon" id="healthIcon">?</div>
+                <div class="status-text">
+                    <strong>Health Check:</strong>
+                    <span id="healthStatus">Pending...</span>
+                </div>
+            </div>
+            <div class="status-item">
+                <div class="status-icon" id="uploadIcon">?</div>
+                <div class="status-text">
+                    <strong>Upload Ready:</strong>
+                    <span id="uploadStatus">Pending...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-message" id="successMsg">
+            ✅ All systems operational! Ready to process audio files.
+        </div>
+
+        <div class="button-group">
+            <button class="btn-secondary" onclick="runTests()">🔄 Run Tests</button>
+            <button class="btn-primary" onclick="goToApp()">📂 Open App</button>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 Tip:</strong> If you see any red indicators, try refreshing the page or clearing your browser cache (Ctrl+Shift+Delete).
+        </div>
+    </div>
+
+    <script>
+        async function runTests() {
+            console.log('Starting connection tests...');
+            
+            // Reset icons
+            document.getElementById('serverIcon').className = 'status-icon loading';
+            document.getElementById('healthIcon').className = 'status-icon loading';
+            document.getElementById('uploadIcon').className = 'status-icon loading';
+            document.getElementById('successMsg').classList.remove('show');
+            
+            let allPass = true;
+            
+            // Test 1: Server connectivity
+            try {
+                const response = await fetch('/', { method: 'HEAD' });
+                if (response.ok) {
+                    document.getElementById('serverIcon').className = 'status-icon ok';
+                    document.getElementById('serverIcon').textContent = '✓';
+                    document.getElementById('serverStatus').textContent = 'Connected ✓';
+                } else {
+                    throw new Error('Server responded with error');
+                }
+            } catch (error) {
+                console.error('Server test failed:', error);
+                document.getElementById('serverIcon').className = 'status-icon error';
+                document.getElementById('serverIcon').textContent = '✗';
+                document.getElementById('serverStatus').textContent = 'Failed ✗';
+                allPass = false;
+            }
+            
+            // Test 2: Health endpoint
+            try {
+                const response = await fetch('/health');
+                const data = await response.json();
+                if (data.status === 'healthy') {
+                    document.getElementById('healthIcon').className = 'status-icon ok';
+                    document.getElementById('healthIcon').textContent = '✓';
+                    document.getElementById('healthStatus').textContent = 'Healthy ✓';
+                } else {
+                    throw new Error('Unhealthy response');
+                }
+            } catch (error) {
+                console.error('Health check failed:', error);
+                document.getElementById('healthIcon').className = 'status-icon error';
+                document.getElementById('healthIcon').textContent = '✗';
+                document.getElementById('healthStatus').textContent = 'Failed ✗';
+                allPass = false;
+            }
+            
+            // Test 3: Upload capability
+            try {
+                const response = await fetch('/api/info');
+                const data = await response.json();
+                if (data.upload_enabled) {
+                    document.getElementById('uploadIcon').className = 'status-icon ok';
+                    document.getElementById('uploadIcon').textContent = '✓';
+                    document.getElementById('uploadStatus').textContent = 'Ready ✓';
+                } else {
+                    throw new Error('Upload not enabled');
+                }
+            } catch (error) {
+                console.error('Upload test failed:', error);
+                document.getElementById('uploadIcon').className = 'status-icon error';
+                document.getElementById('uploadIcon').textContent = '✗';
+                document.getElementById('uploadStatus').textContent = 'Failed ✗';
+                allPass = false;
+            }
+            
+            if (allPass) {
+                document.getElementById('successMsg').classList.add('show');
+            }
+        }
+        
+        function goToApp() {
+            window.location.href = '/';
+        }
+        
+        // Run tests on page load
+        window.addEventListener('load', () => {
+            setTimeout(runTests, 500);
+        });
+    </script>
+</body>
+</html>

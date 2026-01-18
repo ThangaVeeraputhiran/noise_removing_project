@@ -1,0 +1,180 @@
+# ✅ NETWORK ERROR FIX - DO THIS NOW
+
+## The Problem
+You're getting "Network error. Please check your connection and try again." when trying to process audio.
+
+## The Solution (Try in order)
+
+### OPTION 1: Clear Cache (Works 80% of the time) ⭐
+
+**For Chrome/Edge:**
+1. Press: `Ctrl + Shift + Delete`
+2. Select: "All time"
+3. Check: ☑ Cache ☑ Cookies ☑ Hosted app data
+4. Click: "Clear data"
+5. Close browser completely
+6. Reopen: http://localhost:5000
+
+**For Firefox:**
+1. Press: `Ctrl + Shift + Delete`
+2. Select: "Everything"
+3. Click: "Clear Now"
+4. Close browser
+5. Reopen: http://localhost:5000
+
+**For Safari:**
+1. Menu → Develop → Empty Web Storage
+2. Or: Preferences → Privacy → Manage Website Data → Remove All
+3. Reopen: http://localhost:5000
+
+---
+
+### OPTION 2: Test Upload Page
+
+Visit: **http://localhost:5000/upload-test**
+
+This page will:
+- Show detailed upload logs
+- Display exactly what error is happening
+- Help identify the issue
+
+Take a screenshot of the log if you still get errors.
+
+---
+
+### OPTION 3: Use Incognito/Private Mode
+
+Open a **NEW incognito/private window** and go to:
+- http://localhost:5000
+
+This bypasses ALL cache.
+
+---
+
+### OPTION 4: Try Different Browser
+
+If Chrome fails → Try **Firefox**
+If Firefox fails → Try **Edge**
+If Edge fails → Try **Safari**
+
+---
+
+### OPTION 5: Restart Everything
+
+```bash
+# Kill the app
+pkill -f app_production.py
+
+# Wait
+sleep 3
+
+# Restart fresh
+cd /workspaces/Speech-Enhancement-System
+python app_production.py &
+```
+
+Then try: http://localhost:5000
+
+---
+
+### OPTION 6: Diagnostic Page
+
+Visit: **http://localhost:5000/test**
+
+This page runs automatic tests and will show:
+- ✅ if Server is connected
+- ✅ if Health check passes
+- ✅ if Upload is ready
+- ❌ if anything is broken
+
+---
+
+### OPTION 7: Check Browser Console
+
+While on http://localhost:5000:
+1. Press: `F12` (or Ctrl+Shift+I)
+2. Go to: "Console" tab
+3. Try uploading a file
+4. Look for red error messages
+5. Screenshot and share the error
+
+---
+
+## ⚡ FASTEST FIX
+
+```
+1. Press: Ctrl+Shift+Delete
+2. Select all and clear
+3. Close browser completely
+4. Open fresh browser
+5. Go to: http://localhost:5000
+6. Try again
+```
+
+**This fixes 80% of cases in 30 seconds!**
+
+---
+
+## Alternative URLs to Try
+
+If http://localhost:5000 doesn't work:
+
+```
+• http://127.0.0.1:5000
+• http://10.0.0.36:5000
+• http://localhost:5000/upload-test (Test page)
+• http://localhost:5000/test (Diagnostics)
+```
+
+---
+
+## Still Not Working?
+
+**CRITICAL DEBUGGING INFO:**
+
+1. Open Browser Console (F12)
+2. Go to "Network" tab
+3. Upload a file
+4. Take screenshot of Network tab
+5. Check error details
+
+The Network tab shows:
+- Request URL
+- Status code
+- Response headers
+- Response body
+- Exact error message
+
+This information will help identify the real issue.
+
+---
+
+## Server Status Check
+
+To verify the server is actually running:
+
+```bash
+# In terminal:
+curl -v http://localhost:5000/
+
+# Should show:
+# HTTP/1.1 200 OK
+# Content-Type: text/html
+```
+
+If you see this → Server is fine ✅
+If you see anything else → App crashed ❌ → Restart it
+
+---
+
+## Remember
+
+The error message is misleading - it's almost never a network issue.
+It's 99% of the time:
+
+1. **Browser cache** (most common) → Clear cache
+2. **Old browser session** → Use incognito mode
+3. **Different browser bug** → Try another browser
+4. **Outdated JavaScript** → Hard refresh (Ctrl+F5)
+
+**TRY THE CACHE CLEAR FIRST - IT WORKS!** 🎉

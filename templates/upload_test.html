@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Test</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .test-section { border: 1px solid #ccc; padding: 20px; margin: 20px 0; }
+        input { margin: 10px 0; }
+        button { padding: 10px 20px; background: #667eea; color: white; border: none; cursor: pointer; }
+        #log { background: #f0f0f0; padding: 10px; height: 200px; overflow-y: auto; white-space: pre-wrap; font-size: 12px; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Upload Test</h1>
+    
+    <div class="test-section">
+        <h2>Upload Test File</h2>
+        <input type="file" id="audioFile" accept="audio/*">
+        <button onclick="testUpload()">Test Upload</button>
+        <button onclick="clearLog()">Clear Log</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Console Log:</h2>
+        <div id="log"></div>
+    </div>
+    
+    <script>
+        function log(msg, type = 'info') {
+            const logElement = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : '';
+            logElement.innerHTML += `<span class="${className}">[${timestamp}] ${msg}</span>\n`;
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(`[${type}]`, msg);
+        }
+        
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+        
+        async function testUpload() {
+            const file = document.getElementById('audioFile').files[0];
+            if (!file) {
+                log('No file selected', 'error');
+                return;
+            }
+            
+            log(`Selected file: ${file.name} (${file.size} bytes)`, 'info');
+            log('Creating FormData...', 'info');
+            
+            const formData = new FormData();
+            formData.append('audio_file', file);
+            
+            log('Sending to /process endpoint...', 'info');
+            
+            try {
+                const response = await fetch('/process', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                log(`HTTP Status: ${response.status} (${response.statusText})`, response.ok ? 'success' : 'error');
+                
+                const contentType = response.headers.get('content-type');
+                log(`Content-Type: ${contentType}`, 'info');
+                
+                const text = await response.text();
+                log(`Response length: ${text.length} bytes`, 'info');
+                
+                try {
+                    const data = JSON.parse(text);
+                    log(`✓ Valid JSON response`, 'success');
+                    log(`Response: ${JSON.stringify(data, null, 2)}`, 'success');
+                    
+                    if (data.success) {
+                        log(`✓ Processing successful!`, 'success');
+                        log(`Download: ${data.download_url}`, 'success');
+                    } else {
+                        log(`✗ Processing failed: ${data.error}`, 'error');
+                    }
+                } catch (e) {
+                    log(`✗ Failed to parse JSON: ${e.message}`, 'error');
+                    log(`Response text: ${text.substring(0, 500)}...`, 'error');
+                }
+                
+            } catch (error) {
+                log(`✗ Fetch error: ${error.message}`, 'error');
+                log(`Stack: ${error.stack}`, 'error');
+            }
+        }
+        
+        log('Test page loaded. Ready to test uploads.');
+    </script>
+</body>
+</html>

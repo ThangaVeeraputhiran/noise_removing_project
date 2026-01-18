@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deep-Learning Based Noise Reduction & Speech Enhancement</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, sans-serif; margin: 0; color: #0f172a; background: #f8fafc; }
+    header { background: #0ea5e9; color: white; padding: 32px 24px; }
+    main { max-width: 880px; margin: 0 auto; padding: 24px; }
+    h1 { margin: 0; font-size: 28px; }
+    h2 { margin-top: 28px; font-size: 22px; }
+    p { line-height: 1.6; }
+    .card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 16px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+    code, pre { background: #0b1220; color: #e2e8f0; border-radius: 8px; padding: 12px; display: block; overflow-x: auto; }
+    a { color: #0369a1; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .cta { display: inline-block; padding: 10px 14px; background: #0ea5e9; color: white; border-radius: 8px; margin-right: 10px; }
+    .note { font-size: 14px; color: #334155; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Deep-Learning Based Noise Reduction & Speech Enhancement</h1>
+    <p>Project landing page and quick-start guide</p>
+  </header>
+  <main>
+    <div class="card">
+      <h2>Overview</h2>
+      <p>
+        This project provides multiple audio enhancement profiles (Enhanced, Ultra, Extreme) for denoising speech, with a Flask-based web UI and DSP pipelines. GitHub Pages hosts this static landing page; live audio processing runs via the Flask server.
+      </p>
+      <p>
+        Repository: <a href="https://github.com/ghnmqdtg/Deep-Learning-Based-Noise-Reduction-and-Speech-Enhancement-System" target="_blank" rel="noopener">GitHub</a>
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Run Locally</h2>
+      <p>Follow the README for exact steps. Typical setup:</p>
+      <pre><code># Clone and enter the project
+git clone https://github.com/ghnmqdtg/Deep-Learning-Based-Noise-Reduction-and-Speech-Enhancement-System.git
+cd Deep-Learning-Based-Noise-Reduction-and-Speech-Enhancement-System
+
+# Create and activate a virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the web app (choose one based on README)
+python app_production.py
+# or
+./start.sh
+      </code></pre>
+      <p class="note">Once running, open http://localhost:5000 and select your enhancement profile.</p>
+    </div>
+
+    <div class="card">
+      <h2>Features</h2>
+      <ul>
+        <li>Enhanced: Balanced denoising for general use</li>
+        <li>Ultra: Aggressive multi-stage cleaning</li>
+        <li>Extreme: Gap silencing with volume preservation</li>
+        <li>Dataset tools and optional deep learning training notebook</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Documentation</h2>
+      <ul>
+        <li><a href="https://github.com/ghnmqdtg/Deep-Learning-Based-Noise-Reduction-and-Speech-Enhancement-System/blob/main/README.md" target="_blank" rel="noopener">README</a></li>
+        <li><a href="https://github.com/ghnmqdtg/Deep-Learning-Based-Noise-Reduction-and-Speech-Enhancement-System/blob/main/SETUP_GUIDE.md" target="_blank" rel="noopener">Setup Guide</a></li>
+        <li><a href="https://github.com/ghnmqdtg/Deep-Learning-Based-Noise-Reduction-and-Speech-Enhancement-System/blob/main/WEB_APP_README.md" target="_blank" rel="noopener">Web App Guide</a></li>
+      </ul>
+      <p class="note">Processing requires the Flask backend. This page is static.</p>
+    </div>
+
+    <div class="card">
+      <h2>Contact & Issues</h2>
+      <p>Open issues or discussions on the GitHub repository if you encounter problems or have feature requests.</p>
+    </div>
+  </main>
+</body>
+</html>

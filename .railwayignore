@@ -1,0 +1,43 @@
+# Ignore unnecessary files for Railway deployment
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+ENV/
+env/
+
+# Datasets and large files
+Dataset_Generated/
+Dataset_Ultra/
+Training_results/
+uploads/
+outputs/
+denoised_output/
+sample_audio/
+
+# Development files
+.git/
+.vscode/
+*.ipynb_checkpoints/
+Extreme_Noise_Reduction_Training.ipynb
+
+# Documentation
+docs/
+*.md
+!README.md
+*.txt
+!requirements.txt
+!runtime.txt
+
+# Shell scripts
+*.sh
+diagnose.sh
+setup_directories.sh

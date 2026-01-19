@@ -76,7 +76,7 @@ def health():
 
 @app.route('/process', methods=['POST'])
 def process():
-    """Process audio - lazy load everything"""
+    """Process audio with advanced noise removal"""
     try:
         from flask import request
         import os
@@ -93,33 +93,76 @@ def process():
         os.makedirs('uploads', exist_ok=True)
         os.makedirs('outputs', exist_ok=True)
         
-        # Now lazy load heavy imports
+        # Lazy load heavy imports
         import librosa
         import soundfile
-        from enhanced_speech_processor import EnhancedSpeechProcessor
+        import numpy as np
+        from production_system import AdvancedSpeechEnhancer
         
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         level = request.form.get('enhancement_level', 'high')
         
+        # Map enhancement levels to actual processing
+        profile_map = {
+            'light': 'light',
+            'medium': 'medium',
+            'high': 'high',
+            'maximum': 'maximum',
+            'extreme': 'maximum'  # Extreme uses maximum settings
+        }
+        
+        profile = profile_map.get(level, 'high')
+        
         input_path = f'uploads/{timestamp}_{file.filename}'
         file.save(input_path)
         
-        # Load and process
+        # Load audio at 16kHz
         audio, sr = librosa.load(input_path, sr=16000)
-        audio_enhanced = EnhancedSpeechProcessor.enhance(audio, sr=sr, profile=level)
         
-        # Save output
+        # Ensure audio is float32 and normalized
+        audio = audio.astype(np.float32)
+        if np.max(np.abs(audio)) > 0:
+            audio = audio / np.max(np.abs(audio))
+        
+        # Apply multi-stage noise removal using production system
+        # Stage 1: Wiener filtering
+        audio_enhanced = AdvancedSpeechEnhancer.wiener_filter_advanced(audio, sr=16000)
+        
+        # Stage 2: Spectral subtraction (2-4 iterations based on level)
+        iterations = {'light': 1, 'medium': 2, 'high': 3, 'maximum': 4}.get(profile, 3)
+        alpha_values = {'light': 1.2, 'medium': 1.8, 'high': 2.5, 'maximum': 3.0}
+        alpha = alpha_values.get(profile, 2.5)
+        
+        for _ in range(iterations):
+            audio_enhanced = AdvancedSpeechEnhancer.spectral_subtraction_advanced(
+                audio_enhanced, alpha=alpha, sr=16000
+            )
+        
+        # Stage 3: Multi-band processing
+        audio_enhanced = AdvancedSpeechEnhancer.multiband_processing(audio_enhanced, sr=16000)
+        
+        # Stage 4: Post-processing and normalization
+        audio_enhanced = AdvancedSpeechEnhancer.post_processing_gain(audio_enhanced, target_db=-20)
+        
+        # Final safety check - ensure no clipping
+        audio_enhanced = np.clip(audio_enhanced, -0.99, 0.99)
+        
+        # Save output at 16kHz
         output_file = f"{timestamp}_enhanced.wav"
-        soundfile.write(f'outputs/{output_file}', audio_enhanced, sr)
+        soundfile.write(f'outputs/{output_file}', audio_enhanced, 16000)
         
         return {
             'success': True,
             'output_file': output_file,
-            'download_url': f'/download/{output_file}'
+            'download_url': f'/download/{output_file}',
+            'message': f'✓ Noise removed ({profile} level)'
         }, 200
         
     except Exception as e:
-        return {'error': str(e)}, 500
+        import traceback
+        error_msg = str(e)
+        traceback.print_exc()
+        return {'error': f'Processing failed: {error_msg}'}, 500
 
 @app.route('/download/<filename>')
 def download(filename):

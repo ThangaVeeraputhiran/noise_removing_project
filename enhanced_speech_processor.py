@@ -252,6 +252,11 @@ class EnhancedSpeechProcessor:
                 'stages': [('wiener', 1), ('spectral', 3), ('multiband', 1)],
                 'alpha': 3.0,
                 'perceptual': True
+            },
+            'extreme': {
+                'stages': [('wiener', 1), ('spectral', 4), ('multiband', 2)],
+                'alpha': 3.5,
+                'perceptual': True
             }
         }
         

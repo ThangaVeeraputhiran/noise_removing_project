@@ -40,7 +40,8 @@ class ProductionConfig:
         'light': {'alpha': 1.2, 'iterations': 1, 'multiband': False},
         'medium': {'alpha': 1.8, 'iterations': 2, 'multiband': True},
         'high': {'alpha': 2.5, 'iterations': 3, 'multiband': True},
-        'maximum': {'alpha': 3.0, 'iterations': 4, 'multiband': True}
+        'maximum': {'alpha': 3.0, 'iterations': 4, 'multiband': True},
+        'extreme': {'alpha': 3.5, 'iterations': 5, 'multiband': True}
     }
 
 class Logger:

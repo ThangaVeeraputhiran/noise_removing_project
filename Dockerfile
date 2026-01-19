@@ -22,12 +22,13 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p uploads outputs static/spectrograms
 
-# Expose port
-EXPOSE $PORT
+# Expose port (Railway will assign $PORT at runtime)
+EXPOSE 5000
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV FLASK_APP=wsgi.py
+ENV PORT=5000
 
-# Run with gunicorn
-CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 1 --worker-class sync --timeout 120 --access-logfile - --error-logfile - wsgi:app"]
+# Run with gunicorn - use shell form to properly expand PORT variable
+CMD gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 1 --worker-class sync --timeout 120 --access-logfile - --error-logfile - wsgi:app

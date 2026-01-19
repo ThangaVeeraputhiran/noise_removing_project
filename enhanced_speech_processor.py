@@ -207,16 +207,16 @@ class EnhancedSpeechProcessor:
         return audio_enhanced.astype(np.float32)
     
     @staticmethod
-    def normalize_audio(audio, target_db=-20):
-        """Normalize audio to target level"""
+    def normalize_audio(audio, target_db=-18):
+        """Normalize audio to target level for better clarity"""
         rms = np.sqrt(np.mean(audio ** 2))
         if rms > 1e-10:
             target_linear = 10 ** (target_db / 20)
             gain = target_linear / rms
             audio = audio * gain
         
-        # Clip to prevent overflow
-        audio = np.clip(audio, -0.99, 0.99)
+        # Soft clipping instead of hard clip for better quality
+        audio = np.tanh(audio * 0.9) * 0.98
         return audio.astype(np.float32)
     
     @staticmethod
@@ -235,27 +235,27 @@ class EnhancedSpeechProcessor:
         profiles = {
             'light': {
                 'stages': [('wiener', 1)],
-                'alpha': 1.5,
+                'alpha': 1.2,
                 'perceptual': False
             },
             'medium': {
                 'stages': [('wiener', 1), ('spectral', 1)],
-                'alpha': 2.0,
+                'alpha': 1.8,
                 'perceptual': True
             },
             'high': {
+                'stages': [('wiener', 1), ('spectral', 2)],
+                'alpha': 2.2,
+                'perceptual': True
+            },
+            'maximum': {
                 'stages': [('wiener', 1), ('spectral', 2), ('multiband', 1)],
                 'alpha': 2.5,
                 'perceptual': True
             },
-            'maximum': {
+            'extreme': {
                 'stages': [('wiener', 1), ('spectral', 3), ('multiband', 1)],
                 'alpha': 3.0,
-                'perceptual': True
-            },
-            'extreme': {
-                'stages': [('wiener', 1), ('spectral', 4), ('multiband', 2)],
-                'alpha': 3.5,
                 'perceptual': True
             }
         }

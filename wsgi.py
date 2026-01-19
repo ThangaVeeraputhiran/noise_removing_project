@@ -100,7 +100,7 @@ def process():
         from production_system import AdvancedSpeechEnhancer
         
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        level = request.form.get('enhancement_level', 'high')
+        level = request.form.get('enhancement_level', 'medium')
         
         # Map enhancement levels to actual processing
         profile_map = {

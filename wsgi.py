@@ -129,9 +129,12 @@ def download(filename):
     except:
         return {'error': 'Not found'}, 404
 
-# Run
+# Export app for gunicorn/Railway - NO app.run() here!
+# Gunicorn will handle running the app on the PORT environment variable
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8000))
+    # Only for local development when not using gunicorn
+    port = int(os.environ.get('PORT', 5000))
+    print(f"\n🎙️ Starting on http://0.0.0.0:{port}")
     app.run(host='0.0.0.0', port=port, debug=False, threaded=True)
 
 

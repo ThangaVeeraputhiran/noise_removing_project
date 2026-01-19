@@ -49,7 +49,10 @@ def create_directories():
         os.makedirs(folder, exist_ok=True)
 
 # Initialize directories
-create_directories()
+try:
+    create_directories()
+except Exception as e:
+    print(f"Warning: Could not create directories: {e}")
 
 ALLOWED_EXTENSIONS = {'wav', 'mp3', 'ogg', 'flac', 'm4a'}
 

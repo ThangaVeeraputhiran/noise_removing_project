@@ -1,27 +1,33 @@
 # AI Speech Enhancement System v2.1 - Maximum Clarity Edition
-# Railway.app Deployment - Optimized for Production
+# Railway.app Production Deployment - Stable Versions
 
 # Web Framework
-flask>=3.0.0
-flask-cors>=4.0.0
-gunicorn>=21.2.0
-werkzeug>=3.0.0
+Flask==3.0.0
+Flask-CORS==4.0.0
+gunicorn==21.2.0
+Werkzeug==3.0.0
 
-# Audio Processing (Core)
-librosa>=0.10.0
-soundfile>=0.12.0
-audioread>=3.0.0
-resampy>=0.4.2
+# Audio Processing (Core) - STABLE
+librosa==0.10.0
+soundfile==0.12.1
+audioread==3.0.1
+resampy==0.4.2
 
-# Scientific Computing
-numpy>=1.24.0
-scipy>=1.10.0
+# Scientific Computing - COMPATIBLE
+numpy==1.24.3
+scipy==1.11.4
 
 # Visualization
-matplotlib>=3.7.0
+matplotlib==3.8.2
 
-# Additional Audio Processing
-numba>=0.57.0
-cffi>=1.15.0
-pysoundfile>=0.9.0
+# Audio Processing Support
+numba==0.57.1
+cffi==1.16.0
+PySoundFile==0.12.1
+
+# Additional Dependencies
+pooch==1.7.0
+joblib==1.3.2
+threadpoolctl==3.2.0
+LazyLoader==0.3
 

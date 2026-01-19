@@ -1,0 +1,1612 @@
+{
+  "generated": "2026-01-19T08:45:14.397531",
+  "sr": 16000,
+  "duration": 2.0,
+  "num_samples": 200,
+  "snr_range": [
+    0,
+    15
+  ],
+  "samples": [
+    {
+      "idx": 0,
+      "name": "sample_00000",
+      "noise_type": "traffic",
+      "snr_db": 13.22002490796502,
+      "clean_file": "clean/sample_00000.wav",
+      "noisy_file": "noisy/sample_00000.wav"
+    },
+    {
+      "idx": 1,
+      "name": "sample_00001",
+      "noise_type": "speech",
+      "snr_db": 0.01769832467998167,
+      "clean_file": "clean/sample_00001.wav",
+      "noisy_file": "noisy/sample_00001.wav"
+    },
+    {
+      "idx": 2,
+      "name": "sample_00002",
+      "noise_type": "speech",
+      "snr_db": 7.129562556444014,
+      "clean_file": "clean/sample_00002.wav",
+      "noisy_file": "noisy/sample_00002.wav"
+    },
+    {
+      "idx": 3,
+      "name": "sample_00003",
+      "noise_type": "white",
+      "snr_db": 2.244614879733752,
+      "clean_file": "clean/sample_00003.wav",
+      "noisy_file": "noisy/sample_00003.wav"
+    },
+    {
+      "idx": 4,
+      "name": "sample_00004",
+      "noise_type": "office",
+      "snr_db": 7.372832859004162,
+      "clean_file": "clean/sample_00004.wav",
+      "noisy_file": "noisy/sample_00004.wav"
+    },
+    {
+      "idx": 5,
+      "name": "sample_00005",
+      "noise_type": "wind",
+      "snr_db": 6.8529199260689575,
+      "clean_file": "clean/sample_00005.wav",
+      "noisy_file": "noisy/sample_00005.wav"
+    },
+    {
+      "idx": 6,
+      "name": "sample_00006",
+      "noise_type": "speech",
+      "snr_db": 2.9083700460513224,
+      "clean_file": "clean/sample_00006.wav",
+      "noisy_file": "noisy/sample_00006.wav"
+    },
+    {
+      "idx": 7,
+      "name": "sample_00007",
+      "noise_type": "traffic",
+      "snr_db": 1.591039642760181,
+      "clean_file": "clean/sample_00007.wav",
+      "noisy_file": "noisy/sample_00007.wav"
+    },
+    {
+      "idx": 8,
+      "name": "sample_00008",
+      "noise_type": "speech",
+      "snr_db": 6.0339417207019554,
+      "clean_file": "clean/sample_00008.wav",
+      "noisy_file": "noisy/sample_00008.wav"
+    },
+    {
+      "idx": 9,
+      "name": "sample_00009",
+      "noise_type": "traffic",
+      "snr_db": 8.804739907813177,
+      "clean_file": "clean/sample_00009.wav",
+      "noisy_file": "noisy/sample_00009.wav"
+    },
+    {
+      "idx": 10,
+      "name": "sample_00010",
+      "noise_type": "wind",
+      "snr_db": 1.784745688531411,
+      "clean_file": "clean/sample_00010.wav",
+      "noisy_file": "noisy/sample_00010.wav"
+    },
+    {
+      "idx": 11,
+      "name": "sample_00011",
+      "noise_type": "traffic",
+      "snr_db": 8.69438971954636,
+      "clean_file": "clean/sample_00011.wav",
+      "noisy_file": "noisy/sample_00011.wav"
+    },
+    {
+      "idx": 12,
+      "name": "sample_00012",
+      "noise_type": "brown",
+      "snr_db": 8.680689070905819,
+      "clean_file": "clean/sample_00012.wav",
+      "noisy_file": "noisy/sample_00012.wav"
+    },
+    {
+      "idx": 13,
+      "name": "sample_00013",
+      "noise_type": "office",
+      "snr_db": 3.2453755529976807,
+      "clean_file": "clean/sample_00013.wav",
+      "noisy_file": "noisy/sample_00013.wav"
+    },
+    {
+      "idx": 14,
+      "name": "sample_00014",
+      "noise_type": "babble",
+      "snr_db": 12.333733957269505,
+      "clean_file": "clean/sample_00014.wav",
+      "noisy_file": "noisy/sample_00014.wav"
+    },
+    {
+      "idx": 15,
+      "name": "sample_00015",
+      "noise_type": "traffic",
+      "snr_db": 0.2100512954879391,
+      "clean_file": "clean/sample_00015.wav",
+      "noisy_file": "noisy/sample_00015.wav"
+    },
+    {
+      "idx": 16,
+      "name": "sample_00016",
+      "noise_type": "office",
+      "snr_db": 10.216284339202065,
+      "clean_file": "clean/sample_00016.wav",
+      "noisy_file": "noisy/sample_00016.wav"
+    },
+    {
+      "idx": 17,
+      "name": "sample_00017",
+      "noise_type": "office",
+      "snr_db": 9.701162469794516,
+      "clean_file": "clean/sample_00017.wav",
+      "noisy_file": "noisy/sample_00017.wav"
+    },
+    {
+      "idx": 18,
+      "name": "sample_00018",
+      "noise_type": "pink",
+      "snr_db": 0.7652066210328873,
+      "clean_file": "clean/sample_00018.wav",
+      "noisy_file": "noisy/sample_00018.wav"
+    },
+    {
+      "idx": 19,
+      "name": "sample_00019",
+      "noise_type": "white",
+      "snr_db": 11.3391670875383,
+      "clean_file": "clean/sample_00019.wav",
+      "noisy_file": "noisy/sample_00019.wav"
+    },
+    {
+      "idx": 20,
+      "name": "sample_00020",
+      "noise_type": "white",
+      "snr_db": 10.604836928481888,
+      "clean_file": "clean/sample_00020.wav",
+      "noisy_file": "noisy/sample_00020.wav"
+    },
+    {
+      "idx": 21,
+      "name": "sample_00021",
+      "noise_type": "pink",
+      "snr_db": 13.915891050337603,
+      "clean_file": "clean/sample_00021.wav",
+      "noisy_file": "noisy/sample_00021.wav"
+    },
+    {
+      "idx": 22,
+      "name": "sample_00022",
+      "noise_type": "office",
+      "snr_db": 4.271664624436347,
+      "clean_file": "clean/sample_00022.wav",
+      "noisy_file": "noisy/sample_00022.wav"
+    },
+    {
+      "idx": 23,
+      "name": "sample_00023",
+      "noise_type": "babble",
+      "snr_db": 7.327587781664465,
+      "clean_file": "clean/sample_00023.wav",
+      "noisy_file": "noisy/sample_00023.wav"
+    },
+    {
+      "idx": 24,
+      "name": "sample_00024",
+      "noise_type": "office",
+      "snr_db": 4.171790306967484,
+      "clean_file": "clean/sample_00024.wav",
+      "noisy_file": "noisy/sample_00024.wav"
+    },
+    {
+      "idx": 25,
+      "name": "sample_00025",
+      "noise_type": "brown",
+      "snr_db": 9.997757836777398,
+      "clean_file": "clean/sample_00025.wav",
+      "noisy_file": "noisy/sample_00025.wav"
+    },
+    {
+      "idx": 26,
+      "name": "sample_00026",
+      "noise_type": "babble",
+      "snr_db": 14.999396825553003,
+      "clean_file": "clean/sample_00026.wav",
+      "noisy_file": "noisy/sample_00026.wav"
+    },
+    {
+      "idx": 27,
+      "name": "sample_00027",
+      "noise_type": "pink",
+      "snr_db": 13.926695898268218,
+      "clean_file": "clean/sample_00027.wav",
+      "noisy_file": "noisy/sample_00027.wav"
+    },
+    {
+      "idx": 28,
+      "name": "sample_00028",
+      "noise_type": "wind",
+      "snr_db": 3.5454407600350506,
+      "clean_file": "clean/sample_00028.wav",
+      "noisy_file": "noisy/sample_00028.wav"
+    },
+    {
+      "idx": 29,
+      "name": "sample_00029",
+      "noise_type": "white",
+      "snr_db": 1.019825996350635,
+      "clean_file": "clean/sample_00029.wav",
+      "noisy_file": "noisy/sample_00029.wav"
+    },
+    {
+      "idx": 30,
+      "name": "sample_00030",
+      "noise_type": "wind",
+      "snr_db": 7.139617733891026,
+      "clean_file": "clean/sample_00030.wav",
+      "noisy_file": "noisy/sample_00030.wav"
+    },
+    {
+      "idx": 31,
+      "name": "sample_00031",
+      "noise_type": "pink",
+      "snr_db": 8.475639100140777,
+      "clean_file": "clean/sample_00031.wav",
+      "noisy_file": "noisy/sample_00031.wav"
+    },
+    {
+      "idx": 32,
+      "name": "sample_00032",
+      "noise_type": "office",
+      "snr_db": 9.430505544749158,
+      "clean_file": "clean/sample_00032.wav",
+      "noisy_file": "noisy/sample_00032.wav"
+    },
+    {
+      "idx": 33,
+      "name": "sample_00033",
+      "noise_type": "wind",
+      "snr_db": 5.407091101833322,
+      "clean_file": "clean/sample_00033.wav",
+      "noisy_file": "noisy/sample_00033.wav"
+    },
+    {
+      "idx": 34,
+      "name": "sample_00034",
+      "noise_type": "white",
+      "snr_db": 2.340788374864305,
+      "clean_file": "clean/sample_00034.wav",
+      "noisy_file": "noisy/sample_00034.wav"
+    },
+    {
+      "idx": 35,
+      "name": "sample_00035",
+      "noise_type": "pink",
+      "snr_db": 6.456109427731833,
+      "clean_file": "clean/sample_00035.wav",
+      "noisy_file": "noisy/sample_00035.wav"
+    },
+    {
+      "idx": 36,
+      "name": "sample_00036",
+      "noise_type": "traffic",
+      "snr_db": 4.613977420684268,
+      "clean_file": "clean/sample_00036.wav",
+      "noisy_file": "noisy/sample_00036.wav"
+    },
+    {
+      "idx": 37,
+      "name": "sample_00037",
+      "noise_type": "white",
+      "snr_db": 14.821986224406974,
+      "clean_file": "clean/sample_00037.wav",
+      "noisy_file": "noisy/sample_00037.wav"
+    },
+    {
+      "idx": 38,
+      "name": "sample_00038",
+      "noise_type": "speech",
+      "snr_db": 8.724328645403316,
+      "clean_file": "clean/sample_00038.wav",
+      "noisy_file": "noisy/sample_00038.wav"
+    },
+    {
+      "idx": 39,
+      "name": "sample_00039",
+      "noise_type": "traffic",
+      "snr_db": 12.34096526106732,
+      "clean_file": "clean/sample_00039.wav",
+      "noisy_file": "noisy/sample_00039.wav"
+    },
+    {
+      "idx": 40,
+      "name": "sample_00040",
+      "noise_type": "brown",
+      "snr_db": 3.5637695041514146,
+      "clean_file": "clean/sample_00040.wav",
+      "noisy_file": "noisy/sample_00040.wav"
+    },
+    {
+      "idx": 41,
+      "name": "sample_00041",
+      "noise_type": "babble",
+      "snr_db": 1.8763650769110285,
+      "clean_file": "clean/sample_00041.wav",
+      "noisy_file": "noisy/sample_00041.wav"
+    },
+    {
+      "idx": 42,
+      "name": "sample_00042",
+      "noise_type": "traffic",
+      "snr_db": 7.674436823102434,
+      "clean_file": "clean/sample_00042.wav",
+      "noisy_file": "noisy/sample_00042.wav"
+    },
+    {
+      "idx": 43,
+      "name": "sample_00043",
+      "noise_type": "traffic",
+      "snr_db": 6.066376994607165,
+      "clean_file": "clean/sample_00043.wav",
+      "noisy_file": "noisy/sample_00043.wav"
+    },
+    {
+      "idx": 44,
+      "name": "sample_00044",
+      "noise_type": "wind",
+      "snr_db": 3.6202442812065208,
+      "clean_file": "clean/sample_00044.wav",
+      "noisy_file": "noisy/sample_00044.wav"
+    },
+    {
+      "idx": 45,
+      "name": "sample_00045",
+      "noise_type": "brown",
+      "snr_db": 4.4349262524319,
+      "clean_file": "clean/sample_00045.wav",
+      "noisy_file": "noisy/sample_00045.wav"
+    },
+    {
+      "idx": 46,
+      "name": "sample_00046",
+      "noise_type": "white",
+      "snr_db": 1.5594175477769556,
+      "clean_file": "clean/sample_00046.wav",
+      "noisy_file": "noisy/sample_00046.wav"
+    },
+    {
+      "idx": 47,
+      "name": "sample_00047",
+      "noise_type": "traffic",
+      "snr_db": 12.866393343922885,
+      "clean_file": "clean/sample_00047.wav",
+      "noisy_file": "noisy/sample_00047.wav"
+    },
+    {
+      "idx": 48,
+      "name": "sample_00048",
+      "noise_type": "babble",
+      "snr_db": 3.4777023574076322,
+      "clean_file": "clean/sample_00048.wav",
+      "noisy_file": "noisy/sample_00048.wav"
+    },
+    {
+      "idx": 49,
+      "name": "sample_00049",
+      "noise_type": "speech",
+      "snr_db": 10.1049683456243,
+      "clean_file": "clean/sample_00049.wav",
+      "noisy_file": "noisy/sample_00049.wav"
+    },
+    {
+      "idx": 50,
+      "name": "sample_00050",
+      "noise_type": "wind",
+      "snr_db": 12.794302804270622,
+      "clean_file": "clean/sample_00050.wav",
+      "noisy_file": "noisy/sample_00050.wav"
+    },
+    {
+      "idx": 51,
+      "name": "sample_00051",
+      "noise_type": "speech",
+      "snr_db": 9.641383882142232,
+      "clean_file": "clean/sample_00051.wav",
+      "noisy_file": "noisy/sample_00051.wav"
+    },
+    {
+      "idx": 52,
+      "name": "sample_00052",
+      "noise_type": "wind",
+      "snr_db": 8.583148180936687,
+      "clean_file": "clean/sample_00052.wav",
+      "noisy_file": "noisy/sample_00052.wav"
+    },
+    {
+      "idx": 53,
+      "name": "sample_00053",
+      "noise_type": "white",
+      "snr_db": 5.484392762905973,
+      "clean_file": "clean/sample_00053.wav",
+      "noisy_file": "noisy/sample_00053.wav"
+    },
+    {
+      "idx": 54,
+      "name": "sample_00054",
+      "noise_type": "speech",
+      "snr_db": 11.688893821961491,
+      "clean_file": "clean/sample_00054.wav",
+      "noisy_file": "noisy/sample_00054.wav"
+    },
+    {
+      "idx": 55,
+      "name": "sample_00055",
+      "noise_type": "brown",
+      "snr_db": 6.793119789320913,
+      "clean_file": "clean/sample_00055.wav",
+      "noisy_file": "noisy/sample_00055.wav"
+    },
+    {
+      "idx": 56,
+      "name": "sample_00056",
+      "noise_type": "speech",
+      "snr_db": 6.974132987663611,
+      "clean_file": "clean/sample_00056.wav",
+      "noisy_file": "noisy/sample_00056.wav"
+    },
+    {
+      "idx": 57,
+      "name": "sample_00057",
+      "noise_type": "babble",
+      "snr_db": 14.848161205311701,
+      "clean_file": "clean/sample_00057.wav",
+      "noisy_file": "noisy/sample_00057.wav"
+    },
+    {
+      "idx": 58,
+      "name": "sample_00058",
+      "noise_type": "speech",
+      "snr_db": 5.078078318357455,
+      "clean_file": "clean/sample_00058.wav",
+      "noisy_file": "noisy/sample_00058.wav"
+    },
+    {
+      "idx": 59,
+      "name": "sample_00059",
+      "noise_type": "babble",
+      "snr_db": 7.2613355399630155,
+      "clean_file": "clean/sample_00059.wav",
+      "noisy_file": "noisy/sample_00059.wav"
+    },
+    {
+      "idx": 60,
+      "name": "sample_00060",
+      "noise_type": "babble",
+      "snr_db": 1.0472176057000655,
+      "clean_file": "clean/sample_00060.wav",
+      "noisy_file": "noisy/sample_00060.wav"
+    },
+    {
+      "idx": 61,
+      "name": "sample_00061",
+      "noise_type": "pink",
+      "snr_db": 9.870852214461678,
+      "clean_file": "clean/sample_00061.wav",
+      "noisy_file": "noisy/sample_00061.wav"
+    },
+    {
+      "idx": 62,
+      "name": "sample_00062",
+      "noise_type": "office",
+      "snr_db": 10.367075772175024,
+      "clean_file": "clean/sample_00062.wav",
+      "noisy_file": "noisy/sample_00062.wav"
+    },
+    {
+      "idx": 63,
+      "name": "sample_00063",
+      "noise_type": "wind",
+      "snr_db": 4.721654901070203,
+      "clean_file": "clean/sample_00063.wav",
+      "noisy_file": "noisy/sample_00063.wav"
+    },
+    {
+      "idx": 64,
+      "name": "sample_00064",
+      "noise_type": "pink",
+      "snr_db": 3.7490200720106652,
+      "clean_file": "clean/sample_00064.wav",
+      "noisy_file": "noisy/sample_00064.wav"
+    },
+    {
+      "idx": 65,
+      "name": "sample_00065",
+      "noise_type": "white",
+      "snr_db": 7.411643173942586,
+      "clean_file": "clean/sample_00065.wav",
+      "noisy_file": "noisy/sample_00065.wav"
+    },
+    {
+      "idx": 66,
+      "name": "sample_00066",
+      "noise_type": "office",
+      "snr_db": 8.887714806929543,
+      "clean_file": "clean/sample_00066.wav",
+      "noisy_file": "noisy/sample_00066.wav"
+    },
+    {
+      "idx": 67,
+      "name": "sample_00067",
+      "noise_type": "babble",
+      "snr_db": 6.562523888848326,
+      "clean_file": "clean/sample_00067.wav",
+      "noisy_file": "noisy/sample_00067.wav"
+    },
+    {
+      "idx": 68,
+      "name": "sample_00068",
+      "noise_type": "babble",
+      "snr_db": 8.088106500478109,
+      "clean_file": "clean/sample_00068.wav",
+      "noisy_file": "noisy/sample_00068.wav"
+    },
+    {
+      "idx": 69,
+      "name": "sample_00069",
+      "noise_type": "office",
+      "snr_db": 1.0084726251993825,
+      "clean_file": "clean/sample_00069.wav",
+      "noisy_file": "noisy/sample_00069.wav"
+    },
+    {
+      "idx": 70,
+      "name": "sample_00070",
+      "noise_type": "office",
+      "snr_db": 8.822797378345905,
+      "clean_file": "clean/sample_00070.wav",
+      "noisy_file": "noisy/sample_00070.wav"
+    },
+    {
+      "idx": 71,
+      "name": "sample_00071",
+      "noise_type": "traffic",
+      "snr_db": 8.41834265761355,
+      "clean_file": "clean/sample_00071.wav",
+      "noisy_file": "noisy/sample_00071.wav"
+    },
+    {
+      "idx": 72,
+      "name": "sample_00072",
+      "noise_type": "white",
+      "snr_db": 10.133873000812677,
+      "clean_file": "clean/sample_00072.wav",
+      "noisy_file": "noisy/sample_00072.wav"
+    },
+    {
+      "idx": 73,
+      "name": "sample_00073",
+      "noise_type": "pink",
+      "snr_db": 14.945745024652748,
+      "clean_file": "clean/sample_00073.wav",
+      "noisy_file": "noisy/sample_00073.wav"
+    },
+    {
+      "idx": 74,
+      "name": "sample_00074",
+      "noise_type": "brown",
+      "snr_db": 8.304357799649118,
+      "clean_file": "clean/sample_00074.wav",
+      "noisy_file": "noisy/sample_00074.wav"
+    },
+    {
+      "idx": 75,
+      "name": "sample_00075",
+      "noise_type": "white",
+      "snr_db": 9.153144366888004,
+      "clean_file": "clean/sample_00075.wav",
+      "noisy_file": "noisy/sample_00075.wav"
+    },
+    {
+      "idx": 76,
+      "name": "sample_00076",
+      "noise_type": "pink",
+      "snr_db": 14.150474678789672,
+      "clean_file": "clean/sample_00076.wav",
+      "noisy_file": "noisy/sample_00076.wav"
+    },
+    {
+      "idx": 77,
+      "name": "sample_00077",
+      "noise_type": "wind",
+      "snr_db": 8.666448278973773,
+      "clean_file": "clean/sample_00077.wav",
+      "noisy_file": "noisy/sample_00077.wav"
+    },
+    {
+      "idx": 78,
+      "name": "sample_00078",
+      "noise_type": "pink",
+      "snr_db": 11.405536252052697,
+      "clean_file": "clean/sample_00078.wav",
+      "noisy_file": "noisy/sample_00078.wav"
+    },
+    {
+      "idx": 79,
+      "name": "sample_00079",
+      "noise_type": "pink",
+      "snr_db": 8.313549524500406,
+      "clean_file": "clean/sample_00079.wav",
+      "noisy_file": "noisy/sample_00079.wav"
+    },
+    {
+      "idx": 80,
+      "name": "sample_00080",
+      "noise_type": "pink",
+      "snr_db": 1.293698274570786,
+      "clean_file": "clean/sample_00080.wav",
+      "noisy_file": "noisy/sample_00080.wav"
+    },
+    {
+      "idx": 81,
+      "name": "sample_00081",
+      "noise_type": "speech",
+      "snr_db": 11.380490135730764,
+      "clean_file": "clean/sample_00081.wav",
+      "noisy_file": "noisy/sample_00081.wav"
+    },
+    {
+      "idx": 82,
+      "name": "sample_00082",
+      "noise_type": "speech",
+      "snr_db": 0.6651820836517847,
+      "clean_file": "clean/sample_00082.wav",
+      "noisy_file": "noisy/sample_00082.wav"
+    },
+    {
+      "idx": 83,
+      "name": "sample_00083",
+      "noise_type": "speech",
+      "snr_db": 2.2047946106532503,
+      "clean_file": "clean/sample_00083.wav",
+      "noisy_file": "noisy/sample_00083.wav"
+    },
+    {
+      "idx": 84,
+      "name": "sample_00084",
+      "noise_type": "wind",
+      "snr_db": 2.5610119468662274,
+      "clean_file": "clean/sample_00084.wav",
+      "noisy_file": "noisy/sample_00084.wav"
+    },
+    {
+      "idx": 85,
+      "name": "sample_00085",
+      "noise_type": "white",
+      "snr_db": 8.231169232354219,
+      "clean_file": "clean/sample_00085.wav",
+      "noisy_file": "noisy/sample_00085.wav"
+    },
+    {
+      "idx": 86,
+      "name": "sample_00086",
+      "noise_type": "speech",
+      "snr_db": 3.260884107387214,
+      "clean_file": "clean/sample_00086.wav",
+      "noisy_file": "noisy/sample_00086.wav"
+    },
+    {
+      "idx": 87,
+      "name": "sample_00087",
+      "noise_type": "speech",
+      "snr_db": 13.105561052550502,
+      "clean_file": "clean/sample_00087.wav",
+      "noisy_file": "noisy/sample_00087.wav"
+    },
+    {
+      "idx": 88,
+      "name": "sample_00088",
+      "noise_type": "babble",
+      "snr_db": 2.4047243458920504,
+      "clean_file": "clean/sample_00088.wav",
+      "noisy_file": "noisy/sample_00088.wav"
+    },
+    {
+      "idx": 89,
+      "name": "sample_00089",
+      "noise_type": "white",
+      "snr_db": 5.296152681233417,
+      "clean_file": "clean/sample_00089.wav",
+      "noisy_file": "noisy/sample_00089.wav"
+    },
+    {
+      "idx": 90,
+      "name": "sample_00090",
+      "noise_type": "wind",
+      "snr_db": 10.75656048808725,
+      "clean_file": "clean/sample_00090.wav",
+      "noisy_file": "noisy/sample_00090.wav"
+    },
+    {
+      "idx": 91,
+      "name": "sample_00091",
+      "noise_type": "babble",
+      "snr_db": 13.134056468262141,
+      "clean_file": "clean/sample_00091.wav",
+      "noisy_file": "noisy/sample_00091.wav"
+    },
+    {
+      "idx": 92,
+      "name": "sample_00092",
+      "noise_type": "office",
+      "snr_db": 4.599682881756767,
+      "clean_file": "clean/sample_00092.wav",
+      "noisy_file": "noisy/sample_00092.wav"
+    },
+    {
+      "idx": 93,
+      "name": "sample_00093",
+      "noise_type": "speech",
+      "snr_db": 8.759479522395239,
+      "clean_file": "clean/sample_00093.wav",
+      "noisy_file": "noisy/sample_00093.wav"
+    },
+    {
+      "idx": 94,
+      "name": "sample_00094",
+      "noise_type": "speech",
+      "snr_db": 7.141533489801608,
+      "clean_file": "clean/sample_00094.wav",
+      "noisy_file": "noisy/sample_00094.wav"
+    },
+    {
+      "idx": 95,
+      "name": "sample_00095",
+      "noise_type": "white",
+      "snr_db": 9.926438418960123,
+      "clean_file": "clean/sample_00095.wav",
+      "noisy_file": "noisy/sample_00095.wav"
+    },
+    {
+      "idx": 96,
+      "name": "sample_00096",
+      "noise_type": "babble",
+      "snr_db": 10.163559099051373,
+      "clean_file": "clean/sample_00096.wav",
+      "noisy_file": "noisy/sample_00096.wav"
+    },
+    {
+      "idx": 97,
+      "name": "sample_00097",
+      "noise_type": "pink",
+      "snr_db": 4.569970571623542,
+      "clean_file": "clean/sample_00097.wav",
+      "noisy_file": "noisy/sample_00097.wav"
+    },
+    {
+      "idx": 98,
+      "name": "sample_00098",
+      "noise_type": "babble",
+      "snr_db": 12.126698205226662,
+      "clean_file": "clean/sample_00098.wav",
+      "noisy_file": "noisy/sample_00098.wav"
+    },
+    {
+      "idx": 99,
+      "name": "sample_00099",
+      "noise_type": "office",
+      "snr_db": 4.184244289332973,
+      "clean_file": "clean/sample_00099.wav",
+      "noisy_file": "noisy/sample_00099.wav"
+    },
+    {
+      "idx": 100,
+      "name": "sample_00100",
+      "noise_type": "traffic",
+      "snr_db": 13.963155649676391,
+      "clean_file": "clean/sample_00100.wav",
+      "noisy_file": "noisy/sample_00100.wav"
+    },
+    {
+      "idx": 101,
+      "name": "sample_00101",
+      "noise_type": "traffic",
+      "snr_db": 12.734649554812437,
+      "clean_file": "clean/sample_00101.wav",
+      "noisy_file": "noisy/sample_00101.wav"
+    },
+    {
+      "idx": 102,
+      "name": "sample_00102",
+      "noise_type": "office",
+      "snr_db": 1.0337438261162153,
+      "clean_file": "clean/sample_00102.wav",
+      "noisy_file": "noisy/sample_00102.wav"
+    },
+    {
+      "idx": 103,
+      "name": "sample_00103",
+      "noise_type": "pink",
+      "snr_db": 13.970778069619573,
+      "clean_file": "clean/sample_00103.wav",
+      "noisy_file": "noisy/sample_00103.wav"
+    },
+    {
+      "idx": 104,
+      "name": "sample_00104",
+      "noise_type": "white",
+      "snr_db": 8.053938884086806,
+      "clean_file": "clean/sample_00104.wav",
+      "noisy_file": "noisy/sample_00104.wav"
+    },
+    {
+      "idx": 105,
+      "name": "sample_00105",
+      "noise_type": "pink",
+      "snr_db": 0.6436580197970249,
+      "clean_file": "clean/sample_00105.wav",
+      "noisy_file": "noisy/sample_00105.wav"
+    },
+    {
+      "idx": 106,
+      "name": "sample_00106",
+      "noise_type": "brown",
+      "snr_db": 11.546009820779515,
+      "clean_file": "clean/sample_00106.wav",
+      "noisy_file": "noisy/sample_00106.wav"
+    },
+    {
+      "idx": 107,
+      "name": "sample_00107",
+      "noise_type": "babble",
+      "snr_db": 7.799498428070324,
+      "clean_file": "clean/sample_00107.wav",
+      "noisy_file": "noisy/sample_00107.wav"
+    },
+    {
+      "idx": 108,
+      "name": "sample_00108",
+      "noise_type": "pink",
+      "snr_db": 4.256326355689537,
+      "clean_file": "clean/sample_00108.wav",
+      "noisy_file": "noisy/sample_00108.wav"
+    },
+    {
+      "idx": 109,
+      "name": "sample_00109",
+      "noise_type": "pink",
+      "snr_db": 14.417887826609848,
+      "clean_file": "clean/sample_00109.wav",
+      "noisy_file": "noisy/sample_00109.wav"
+    },
+    {
+      "idx": 110,
+      "name": "sample_00110",
+      "noise_type": "speech",
+      "snr_db": 0.03264287474858352,
+      "clean_file": "clean/sample_00110.wav",
+      "noisy_file": "noisy/sample_00110.wav"
+    },
+    {
+      "idx": 111,
+      "name": "sample_00111",
+      "noise_type": "traffic",
+      "snr_db": 2.6877287253174065,
+      "clean_file": "clean/sample_00111.wav",
+      "noisy_file": "noisy/sample_00111.wav"
+    },
+    {
+      "idx": 112,
+      "name": "sample_00112",
+      "noise_type": "babble",
+      "snr_db": 10.4652801313976,
+      "clean_file": "clean/sample_00112.wav",
+      "noisy_file": "noisy/sample_00112.wav"
+    },
+    {
+      "idx": 113,
+      "name": "sample_00113",
+      "noise_type": "speech",
+      "snr_db": 4.389412118920292,
+      "clean_file": "clean/sample_00113.wav",
+      "noisy_file": "noisy/sample_00113.wav"
+    },
+    {
+      "idx": 114,
+      "name": "sample_00114",
+      "noise_type": "pink",
+      "snr_db": 14.194349871420695,
+      "clean_file": "clean/sample_00114.wav",
+      "noisy_file": "noisy/sample_00114.wav"
+    },
+    {
+      "idx": 115,
+      "name": "sample_00115",
+      "noise_type": "babble",
+      "snr_db": 0.8125692309030041,
+      "clean_file": "clean/sample_00115.wav",
+      "noisy_file": "noisy/sample_00115.wav"
+    },
+    {
+      "idx": 116,
+      "name": "sample_00116",
+      "noise_type": "pink",
+      "snr_db": 2.592561810359588,
+      "clean_file": "clean/sample_00116.wav",
+      "noisy_file": "noisy/sample_00116.wav"
+    },
+    {
+      "idx": 117,
+      "name": "sample_00117",
+      "noise_type": "wind",
+      "snr_db": 6.967201032842686,
+      "clean_file": "clean/sample_00117.wav",
+      "noisy_file": "noisy/sample_00117.wav"
+    },
+    {
+      "idx": 118,
+      "name": "sample_00118",
+      "noise_type": "white",
+      "snr_db": 4.674097831322618,
+      "clean_file": "clean/sample_00118.wav",
+      "noisy_file": "noisy/sample_00118.wav"
+    },
+    {
+      "idx": 119,
+      "name": "sample_00119",
+      "noise_type": "brown",
+      "snr_db": 3.131263934436403,
+      "clean_file": "clean/sample_00119.wav",
+      "noisy_file": "noisy/sample_00119.wav"
+    },
+    {
+      "idx": 120,
+      "name": "sample_00120",
+      "noise_type": "brown",
+      "snr_db": 0.2753310776732698,
+      "clean_file": "clean/sample_00120.wav",
+      "noisy_file": "noisy/sample_00120.wav"
+    },
+    {
+      "idx": 121,
+      "name": "sample_00121",
+      "noise_type": "pink",
+      "snr_db": 8.002137602075239,
+      "clean_file": "clean/sample_00121.wav",
+      "noisy_file": "noisy/sample_00121.wav"
+    },
+    {
+      "idx": 122,
+      "name": "sample_00122",
+      "noise_type": "white",
+      "snr_db": 8.975540474881573,
+      "clean_file": "clean/sample_00122.wav",
+      "noisy_file": "noisy/sample_00122.wav"
+    },
+    {
+      "idx": 123,
+      "name": "sample_00123",
+      "noise_type": "brown",
+      "snr_db": 0.9263009051217558,
+      "clean_file": "clean/sample_00123.wav",
+      "noisy_file": "noisy/sample_00123.wav"
+    },
+    {
+      "idx": 124,
+      "name": "sample_00124",
+      "noise_type": "traffic",
+      "snr_db": 7.1810454764893175,
+      "clean_file": "clean/sample_00124.wav",
+      "noisy_file": "noisy/sample_00124.wav"
+    },
+    {
+      "idx": 125,
+      "name": "sample_00125",
+      "noise_type": "wind",
+      "snr_db": 6.9006964978119925,
+      "clean_file": "clean/sample_00125.wav",
+      "noisy_file": "noisy/sample_00125.wav"
+    },
+    {
+      "idx": 126,
+      "name": "sample_00126",
+      "noise_type": "traffic",
+      "snr_db": 11.604904269057435,
+      "clean_file": "clean/sample_00126.wav",
+      "noisy_file": "noisy/sample_00126.wav"
+    },
+    {
+      "idx": 127,
+      "name": "sample_00127",
+      "noise_type": "speech",
+      "snr_db": 12.613444901209084,
+      "clean_file": "clean/sample_00127.wav",
+      "noisy_file": "noisy/sample_00127.wav"
+    },
+    {
+      "idx": 128,
+      "name": "sample_00128",
+      "noise_type": "babble",
+      "snr_db": 10.082657278445046,
+      "clean_file": "clean/sample_00128.wav",
+      "noisy_file": "noisy/sample_00128.wav"
+    },
+    {
+      "idx": 129,
+      "name": "sample_00129",
+      "noise_type": "wind",
+      "snr_db": 1.848130349162147,
+      "clean_file": "clean/sample_00129.wav",
+      "noisy_file": "noisy/sample_00129.wav"
+    },
+    {
+      "idx": 130,
+      "name": "sample_00130",
+      "noise_type": "brown",
+      "snr_db": 5.577267624501147,
+      "clean_file": "clean/sample_00130.wav",
+      "noisy_file": "noisy/sample_00130.wav"
+    },
+    {
+      "idx": 131,
+      "name": "sample_00131",
+      "noise_type": "brown",
+      "snr_db": 3.587190287850213,
+      "clean_file": "clean/sample_00131.wav",
+      "noisy_file": "noisy/sample_00131.wav"
+    },
+    {
+      "idx": 132,
+      "name": "sample_00132",
+      "noise_type": "speech",
+      "snr_db": 13.689219180619576,
+      "clean_file": "clean/sample_00132.wav",
+      "noisy_file": "noisy/sample_00132.wav"
+    },
+    {
+      "idx": 133,
+      "name": "sample_00133",
+      "noise_type": "speech",
+      "snr_db": 6.889071429988149,
+      "clean_file": "clean/sample_00133.wav",
+      "noisy_file": "noisy/sample_00133.wav"
+    },
+    {
+      "idx": 134,
+      "name": "sample_00134",
+      "noise_type": "babble",
+      "snr_db": 13.77307429580537,
+      "clean_file": "clean/sample_00134.wav",
+      "noisy_file": "noisy/sample_00134.wav"
+    },
+    {
+      "idx": 135,
+      "name": "sample_00135",
+      "noise_type": "traffic",
+      "snr_db": 13.735077979795356,
+      "clean_file": "clean/sample_00135.wav",
+      "noisy_file": "noisy/sample_00135.wav"
+    },
+    {
+      "idx": 136,
+      "name": "sample_00136",
+      "noise_type": "white",
+      "snr_db": 9.555490415852454,
+      "clean_file": "clean/sample_00136.wav",
+      "noisy_file": "noisy/sample_00136.wav"
+    },
+    {
+      "idx": 137,
+      "name": "sample_00137",
+      "noise_type": "traffic",
+      "snr_db": 5.729583493800377,
+      "clean_file": "clean/sample_00137.wav",
+      "noisy_file": "noisy/sample_00137.wav"
+    },
+    {
+      "idx": 138,
+      "name": "sample_00138",
+      "noise_type": "pink",
+      "snr_db": 1.2857370308260103,
+      "clean_file": "clean/sample_00138.wav",
+      "noisy_file": "noisy/sample_00138.wav"
+    },
+    {
+      "idx": 139,
+      "name": "sample_00139",
+      "noise_type": "wind",
+      "snr_db": 2.3572974109618148,
+      "clean_file": "clean/sample_00139.wav",
+      "noisy_file": "noisy/sample_00139.wav"
+    },
+    {
+      "idx": 140,
+      "name": "sample_00140",
+      "noise_type": "white",
+      "snr_db": 6.683771410407557,
+      "clean_file": "clean/sample_00140.wav",
+      "noisy_file": "noisy/sample_00140.wav"
+    },
+    {
+      "idx": 141,
+      "name": "sample_00141",
+      "noise_type": "traffic",
+      "snr_db": 4.171384379476841,
+      "clean_file": "clean/sample_00141.wav",
+      "noisy_file": "noisy/sample_00141.wav"
+    },
+    {
+      "idx": 142,
+      "name": "sample_00142",
+      "noise_type": "traffic",
+      "snr_db": 6.863513093964903,
+      "clean_file": "clean/sample_00142.wav",
+      "noisy_file": "noisy/sample_00142.wav"
+    },
+    {
+      "idx": 143,
+      "name": "sample_00143",
+      "noise_type": "speech",
+      "snr_db": 9.49936123076273,
+      "clean_file": "clean/sample_00143.wav",
+      "noisy_file": "noisy/sample_00143.wav"
+    },
+    {
+      "idx": 144,
+      "name": "sample_00144",
+      "noise_type": "wind",
+      "snr_db": 10.442390815167746,
+      "clean_file": "clean/sample_00144.wav",
+      "noisy_file": "noisy/sample_00144.wav"
+    },
+    {
+      "idx": 145,
+      "name": "sample_00145",
+      "noise_type": "office",
+      "snr_db": 9.513598205219456,
+      "clean_file": "clean/sample_00145.wav",
+      "noisy_file": "noisy/sample_00145.wav"
+    },
+    {
+      "idx": 146,
+      "name": "sample_00146",
+      "noise_type": "brown",
+      "snr_db": 4.17463996133464,
+      "clean_file": "clean/sample_00146.wav",
+      "noisy_file": "noisy/sample_00146.wav"
+    },
+    {
+      "idx": 147,
+      "name": "sample_00147",
+      "noise_type": "speech",
+      "snr_db": 5.455741038717678,
+      "clean_file": "clean/sample_00147.wav",
+      "noisy_file": "noisy/sample_00147.wav"
+    },
+    {
+      "idx": 148,
+      "name": "sample_00148",
+      "noise_type": "babble",
+      "snr_db": 1.5247939857329613,
+      "clean_file": "clean/sample_00148.wav",
+      "noisy_file": "noisy/sample_00148.wav"
+    },
+    {
+      "idx": 149,
+      "name": "sample_00149",
+      "noise_type": "wind",
+      "snr_db": 6.014158125296284,
+      "clean_file": "clean/sample_00149.wav",
+      "noisy_file": "noisy/sample_00149.wav"
+    },
+    {
+      "idx": 150,
+      "name": "sample_00150",
+      "noise_type": "babble",
+      "snr_db": 5.720790501273358,
+      "clean_file": "clean/sample_00150.wav",
+      "noisy_file": "noisy/sample_00150.wav"
+    },
+    {
+      "idx": 151,
+      "name": "sample_00151",
+      "noise_type": "brown",
+      "snr_db": 8.579623985811278,
+      "clean_file": "clean/sample_00151.wav",
+      "noisy_file": "noisy/sample_00151.wav"
+    },
+    {
+      "idx": 152,
+      "name": "sample_00152",
+      "noise_type": "brown",
+      "snr_db": 4.241376040446209,
+      "clean_file": "clean/sample_00152.wav",
+      "noisy_file": "noisy/sample_00152.wav"
+    },
+    {
+      "idx": 153,
+      "name": "sample_00153",
+      "noise_type": "speech",
+      "snr_db": 8.957718920467821,
+      "clean_file": "clean/sample_00153.wav",
+      "noisy_file": "noisy/sample_00153.wav"
+    },
+    {
+      "idx": 154,
+      "name": "sample_00154",
+      "noise_type": "wind",
+      "snr_db": 12.099241340403113,
+      "clean_file": "clean/sample_00154.wav",
+      "noisy_file": "noisy/sample_00154.wav"
+    },
+    {
+      "idx": 155,
+      "name": "sample_00155",
+      "noise_type": "speech",
+      "snr_db": 0.0842646116582807,
+      "clean_file": "clean/sample_00155.wav",
+      "noisy_file": "noisy/sample_00155.wav"
+    },
+    {
+      "idx": 156,
+      "name": "sample_00156",
+      "noise_type": "babble",
+      "snr_db": 12.980741973970401,
+      "clean_file": "clean/sample_00156.wav",
+      "noisy_file": "noisy/sample_00156.wav"
+    },
+    {
+      "idx": 157,
+      "name": "sample_00157",
+      "noise_type": "office",
+      "snr_db": 13.163698605813842,
+      "clean_file": "clean/sample_00157.wav",
+      "noisy_file": "noisy/sample_00157.wav"
+    },
+    {
+      "idx": 158,
+      "name": "sample_00158",
+      "noise_type": "brown",
+      "snr_db": 3.177169139715515,
+      "clean_file": "clean/sample_00158.wav",
+      "noisy_file": "noisy/sample_00158.wav"
+    },
+    {
+      "idx": 159,
+      "name": "sample_00159",
+      "noise_type": "speech",
+      "snr_db": 8.513319898319539,
+      "clean_file": "clean/sample_00159.wav",
+      "noisy_file": "noisy/sample_00159.wav"
+    },
+    {
+      "idx": 160,
+      "name": "sample_00160",
+      "noise_type": "office",
+      "snr_db": 13.000365612581698,
+      "clean_file": "clean/sample_00160.wav",
+      "noisy_file": "noisy/sample_00160.wav"
+    },
+    {
+      "idx": 161,
+      "name": "sample_00161",
+      "noise_type": "brown",
+      "snr_db": 12.946432963446934,
+      "clean_file": "clean/sample_00161.wav",
+      "noisy_file": "noisy/sample_00161.wav"
+    },
+    {
+      "idx": 162,
+      "name": "sample_00162",
+      "noise_type": "wind",
+      "snr_db": 13.590125897974984,
+      "clean_file": "clean/sample_00162.wav",
+      "noisy_file": "noisy/sample_00162.wav"
+    },
+    {
+      "idx": 163,
+      "name": "sample_00163",
+      "noise_type": "office",
+      "snr_db": 13.488532336369769,
+      "clean_file": "clean/sample_00163.wav",
+      "noisy_file": "noisy/sample_00163.wav"
+    },
+    {
+      "idx": 164,
+      "name": "sample_00164",
+      "noise_type": "wind",
+      "snr_db": 13.36533848079379,
+      "clean_file": "clean/sample_00164.wav",
+      "noisy_file": "noisy/sample_00164.wav"
+    },
+    {
+      "idx": 165,
+      "name": "sample_00165",
+      "noise_type": "babble",
+      "snr_db": 14.526636575129208,
+      "clean_file": "clean/sample_00165.wav",
+      "noisy_file": "noisy/sample_00165.wav"
+    },
+    {
+      "idx": 166,
+      "name": "sample_00166",
+      "noise_type": "white",
+      "snr_db": 4.055024646569364,
+      "clean_file": "clean/sample_00166.wav",
+      "noisy_file": "noisy/sample_00166.wav"
+    },
+    {
+      "idx": 167,
+      "name": "sample_00167",
+      "noise_type": "traffic",
+      "snr_db": 0.5037975201870848,
+      "clean_file": "clean/sample_00167.wav",
+      "noisy_file": "noisy/sample_00167.wav"
+    },
+    {
+      "idx": 168,
+      "name": "sample_00168",
+      "noise_type": "babble",
+      "snr_db": 3.808781151818565,
+      "clean_file": "clean/sample_00168.wav",
+      "noisy_file": "noisy/sample_00168.wav"
+    },
+    {
+      "idx": 169,
+      "name": "sample_00169",
+      "noise_type": "babble",
+      "snr_db": 8.373222806348544,
+      "clean_file": "clean/sample_00169.wav",
+      "noisy_file": "noisy/sample_00169.wav"
+    },
+    {
+      "idx": 170,
+      "name": "sample_00170",
+      "noise_type": "wind",
+      "snr_db": 11.931346373533252,
+      "clean_file": "clean/sample_00170.wav",
+      "noisy_file": "noisy/sample_00170.wav"
+    },
+    {
+      "idx": 171,
+      "name": "sample_00171",
+      "noise_type": "pink",
+      "snr_db": 8.119339526140413,
+      "clean_file": "clean/sample_00171.wav",
+      "noisy_file": "noisy/sample_00171.wav"
+    },
+    {
+      "idx": 172,
+      "name": "sample_00172",
+      "noise_type": "babble",
+      "snr_db": 12.430081305716499,
+      "clean_file": "clean/sample_00172.wav",
+      "noisy_file": "noisy/sample_00172.wav"
+    },
+    {
+      "idx": 173,
+      "name": "sample_00173",
+      "noise_type": "office",
+      "snr_db": 6.3925290377882025,
+      "clean_file": "clean/sample_00173.wav",
+      "noisy_file": "noisy/sample_00173.wav"
+    },
+    {
+      "idx": 174,
+      "name": "sample_00174",
+      "noise_type": "brown",
+      "snr_db": 10.68445630977597,
+      "clean_file": "clean/sample_00174.wav",
+      "noisy_file": "noisy/sample_00174.wav"
+    },
+    {
+      "idx": 175,
+      "name": "sample_00175",
+      "noise_type": "brown",
+      "snr_db": 13.440866597783412,
+      "clean_file": "clean/sample_00175.wav",
+      "noisy_file": "noisy/sample_00175.wav"
+    },
+    {
+      "idx": 176,
+      "name": "sample_00176",
+      "noise_type": "white",
+      "snr_db": 4.366948981403038,
+      "clean_file": "clean/sample_00176.wav",
+      "noisy_file": "noisy/sample_00176.wav"
+    },
+    {
+      "idx": 177,
+      "name": "sample_00177",
+      "noise_type": "wind",
+      "snr_db": 12.987677939528131,
+      "clean_file": "clean/sample_00177.wav",
+      "noisy_file": "noisy/sample_00177.wav"
+    },
+    {
+      "idx": 178,
+      "name": "sample_00178",
+      "noise_type": "wind",
+      "snr_db": 6.372795398571528,
+      "clean_file": "clean/sample_00178.wav",
+      "noisy_file": "noisy/sample_00178.wav"
+    },
+    {
+      "idx": 179,
+      "name": "sample_00179",
+      "noise_type": "traffic",
+      "snr_db": 0.8693837220487499,
+      "clean_file": "clean/sample_00179.wav",
+      "noisy_file": "noisy/sample_00179.wav"
+    },
+    {
+      "idx": 180,
+      "name": "sample_00180",
+      "noise_type": "brown",
+      "snr_db": 0.8162691348484291,
+      "clean_file": "clean/sample_00180.wav",
+      "noisy_file": "noisy/sample_00180.wav"
+    },
+    {
+      "idx": 181,
+      "name": "sample_00181",
+      "noise_type": "pink",
+      "snr_db": 1.063548045390164,
+      "clean_file": "clean/sample_00181.wav",
+      "noisy_file": "noisy/sample_00181.wav"
+    },
+    {
+      "idx": 182,
+      "name": "sample_00182",
+      "noise_type": "white",
+      "snr_db": 12.194109019050154,
+      "clean_file": "clean/sample_00182.wav",
+      "noisy_file": "noisy/sample_00182.wav"
+    },
+    {
+      "idx": 183,
+      "name": "sample_00183",
+      "noise_type": "brown",
+      "snr_db": 7.102765233851746,
+      "clean_file": "clean/sample_00183.wav",
+      "noisy_file": "noisy/sample_00183.wav"
+    },
+    {
+      "idx": 184,
+      "name": "sample_00184",
+      "noise_type": "white",
+      "snr_db": 2.7242576508300442,
+      "clean_file": "clean/sample_00184.wav",
+      "noisy_file": "noisy/sample_00184.wav"
+    },
+    {
+      "idx": 185,
+      "name": "sample_00185",
+      "noise_type": "white",
+      "snr_db": 1.0550992927425151,
+      "clean_file": "clean/sample_00185.wav",
+      "noisy_file": "noisy/sample_00185.wav"
+    },
+    {
+      "idx": 186,
+      "name": "sample_00186",
+      "noise_type": "office",
+      "snr_db": 0.10424866923018916,
+      "clean_file": "clean/sample_00186.wav",
+      "noisy_file": "noisy/sample_00186.wav"
+    },
+    {
+      "idx": 187,
+      "name": "sample_00187",
+      "noise_type": "white",
+      "snr_db": 7.262903273016297,
+      "clean_file": "clean/sample_00187.wav",
+      "noisy_file": "noisy/sample_00187.wav"
+    },
+    {
+      "idx": 188,
+      "name": "sample_00188",
+      "noise_type": "babble",
+      "snr_db": 11.151797941623665,
+      "clean_file": "clean/sample_00188.wav",
+      "noisy_file": "noisy/sample_00188.wav"
+    },
+    {
+      "idx": 189,
+      "name": "sample_00189",
+      "noise_type": "wind",
+      "snr_db": 10.024506377928667,
+      "clean_file": "clean/sample_00189.wav",
+      "noisy_file": "noisy/sample_00189.wav"
+    },
+    {
+      "idx": 190,
+      "name": "sample_00190",
+      "noise_type": "pink",
+      "snr_db": 14.325188624424461,
+      "clean_file": "clean/sample_00190.wav",
+      "noisy_file": "noisy/sample_00190.wav"
+    },
+    {
+      "idx": 191,
+      "name": "sample_00191",
+      "noise_type": "office",
+      "snr_db": 14.44517586477971,
+      "clean_file": "clean/sample_00191.wav",
+      "noisy_file": "noisy/sample_00191.wav"
+    },
+    {
+      "idx": 192,
+      "name": "sample_00192",
+      "noise_type": "white",
+      "snr_db": 6.042150032543841,
+      "clean_file": "clean/sample_00192.wav",
+      "noisy_file": "noisy/sample_00192.wav"
+    },
+    {
+      "idx": 193,
+      "name": "sample_00193",
+      "noise_type": "white",
+      "snr_db": 9.971662908987145,
+      "clean_file": "clean/sample_00193.wav",
+      "noisy_file": "noisy/sample_00193.wav"
+    },
+    {
+      "idx": 194,
+      "name": "sample_00194",
+      "noise_type": "speech",
+      "snr_db": 9.470280828584926,
+      "clean_file": "clean/sample_00194.wav",
+      "noisy_file": "noisy/sample_00194.wav"
+    },
+    {
+      "idx": 195,
+      "name": "sample_00195",
+      "noise_type": "speech",
+      "snr_db": 1.3358342282644808,
+      "clean_file": "clean/sample_00195.wav",
+      "noisy_file": "noisy/sample_00195.wav"
+    },
+    {
+      "idx": 196,
+      "name": "sample_00196",
+      "noise_type": "wind",
+      "snr_db": 13.738668283439681,
+      "clean_file": "clean/sample_00196.wav",
+      "noisy_file": "noisy/sample_00196.wav"
+    },
+    {
+      "idx": 197,
+      "name": "sample_00197",
+      "noise_type": "office",
+      "snr_db": 7.2296665430197695,
+      "clean_file": "clean/sample_00197.wav",
+      "noisy_file": "noisy/sample_00197.wav"
+    },
+    {
+      "idx": 198,
+      "name": "sample_00198",
+      "noise_type": "speech",
+      "snr_db": 10.741923278548358,
+      "clean_file": "clean/sample_00198.wav",
+      "noisy_file": "noisy/sample_00198.wav"
+    },
+    {
+      "idx": 199,
+      "name": "sample_00199",
+      "noise_type": "brown",
+      "snr_db": 13.15961232807199,
+      "clean_file": "clean/sample_00199.wav",
+      "noisy_file": "noisy/sample_00199.wav"
+    }
+  ]
+}

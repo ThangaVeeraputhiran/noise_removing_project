@@ -26,8 +26,8 @@ RUN mkdir -p uploads outputs static/spectrograms
 ENV PYTHONUNBUFFERED=1
 ENV FLASK_APP=wsgi.py
 
-# Expose port
+# Expose port (Railway will inject PORT env var)
 EXPOSE 5000
 
-# Run with gunicorn - explicit port binding for Railway
-CMD exec gunicorn --bind 0.0.0.0:5000 --workers 1 --worker-class sync --timeout 120 --access-logfile - --error-logfile - wsgi:app
+# Start the application with proper PORT handling
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 1 --worker-class sync --timeout 120 --access-logfile - --error-logfile - wsgi:app"]

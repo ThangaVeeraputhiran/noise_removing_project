@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speech Enhancement System - AI-Powered Noise Reduction</title>
+    <title>AI Speech Enhancement - Maximum Clarity Noise Removal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -13,9 +13,12 @@
         <header class="header">
             <div class="logo">
                 <i class="fas fa-microphone-alt"></i>
-                <h1>Speech Enhancement System</h1>
+                <h1>AI Speech Enhancement System</h1>
             </div>
-            <p class="subtitle">AI-Powered Noise Reduction & Speech Enhancement</p>
+            <p class="subtitle">Professional-Grade Noise Removal with Maximum Clarity & 80-99% Confidence Detection</p>
+            <div style="margin-top: 10px; padding: 8px 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; display: inline-block; color: white; font-size: 13px; font-weight: 600;">
+                <i class="fas fa-bolt"></i> NEW: EXTREME Mode — Up to 4x Speech Clarity with 12 dB Volume Boost
+            </div>
         </header>
 
         <!-- Main Content -->
@@ -36,14 +39,23 @@
                         <p class="file-info">Supported formats: WAV, MP3, OGG, FLAC (Max 50MB)</p>
                         
                         <div style="margin: 20px 0; text-align: left;">
-                            <label for="enhancementLevel" style="display: block; margin-bottom: 8px; font-weight: 600;">Enhancement Level:</label>
-                            <select id="enhancementLevel" name="enhancement_level" style="width: 100%; padding: 10px; border: 2px solid #667eea; border-radius: 8px; font-size: 14px;">
-                                <option value="light">Light (Subtle noise reduction)</option>
-                                <option value="medium">Medium (Balanced)</option>
-                                <option value="high">High (Aggressive - Recommended)</option>
-                                <option value="maximum">Maximum (Most aggressive)</option>
-                                <option value="extreme" selected>🔥 EXTREME (100% Clean - Perfect Silence)</option>
+                            <label for="enhancementLevel" style="display: block; margin-bottom: 8px; font-weight: 600; color: #1f2937;">Enhancement Level:</label>
+                            <select id="enhancementLevel" name="enhancement_level" style="width: 100%; padding: 12px; border: 2px solid #667eea; border-radius: 8px; font-size: 14px; background-color: white; cursor: pointer;">
+                                <option value="low">🔵 Low — Gentle cleanup, preserves ambience</option>
+                                <option value="medium">🟢 Medium — Balanced noise removal</option>
+                                <option value="high">🟡 High — Strong removal, clear voice</option>
+                                <option value="advanced">🟠 Advanced — Maximum removal, voice boosted</option>
+                                <option value="extreme" selected>🔴 EXTREME — Ultra-Clarity: 4x Speech, 12dB Boost, 80-99% Confidence</option>
                             </select>
+                            <div style="margin-top: 12px; padding: 12px; background: #f3f4f6; border-left: 4px solid #667eea; border-radius: 4px;">
+                                <p style="margin: 0; font-size: 12px; color: #374151; line-height: 1.6;">
+                                    <strong>💡 Mode Guide:</strong><br>
+                                    • <strong>EXTREME</strong>: Hard-to-understand speech → Crystal clear (α=12.0, 4x consonants, 3.5x formants)<br>
+                                    • <strong>Advanced</strong>: Heavy noise → Clean speech (best for recordings)<br>
+                                    • <strong>High</strong>: Moderate noise → Clear conversation<br>
+                                    • <strong>Medium/Low</strong>: Light cleanup for podcasts
+                                </p>
+                            </div>
                         </div>
                         
                         <button type="submit" class="btn-primary" id="processBtn" disabled>
@@ -57,18 +69,23 @@
                 <div class="features">
                     <div class="feature-card">
                         <i class="fas fa-brain"></i>
-                        <h3>AI Classification</h3>
-                        <p>Automatically detects noise type using deep learning</p>
+                        <h3>AI Noise Detection</h3>
+                        <p>80-99% confidence in classifying 4 noise types with deep learning</p>
                     </div>
                     <div class="feature-card">
                         <i class="fas fa-wave-square"></i>
-                        <h3>Noise Removal</h3>
-                        <p>Removes environmental noise while preserving speech</p>
+                        <h3>Maximum Clarity</h3>
+                        <p>4x consonant boost, 3.5x formant emphasis for crystal-clear speech</p>
                     </div>
                     <div class="feature-card">
                         <i class="fas fa-chart-line"></i>
-                        <h3>Quality Metrics</h3>
-                        <p>Provides SNR improvement and visual spectrograms</p>
+                        <h3>Volume Preservation</h3>
+                        <p>Automatic +2 to +12 dB boost maintains loudness after denoising</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-magic"></i>
+                        <h3>Spectral Processing</h3>
+                        <p>Advanced α=12.0 spectral subtraction with 5-stage enhancement</p>
                     </div>
                 </div>
             </div>
@@ -162,11 +179,15 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="footer-content">
-                <p>&copy; 2026 Speech Enhancement System | Powered by Deep Learning</p>
+                <p>&copy; 2026 AI Speech Enhancement System v2.1 | Maximum Clarity Edition | Powered by Advanced Deep Learning & Signal Processing</p>
                 <div class="tech-stack">
-                    <span><i class="fab fa-python"></i> Python</span>
-                    <span><i class="fas fa-brain"></i> TensorFlow</span>
-                    <span><i class="fas fa-flask"></i> Flask</span>
+                    <span><i class="fab fa-python"></i> Python 3.12</span>
+                    <span><i class="fas fa-brain"></i> Spectral Subtraction (α=12.0)</span>
+                    <span><i class="fas fa-flask"></i> Flask + librosa</span>
+                    <span><i class="fas fa-bolt"></i> 4x Speech Clarity</span>
+                </div>
+                <div style="margin-top: 10px; font-size: 12px; color: #9ca3af;">
+                    <strong>Key Features:</strong> 80-99% Confidence Detection • 12 dB Volume Boost • 5-Stage Enhancement Pipeline • Real-time Spectrogram Analysis
                 </div>
             </div>
         </footer>

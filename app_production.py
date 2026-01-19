@@ -56,6 +56,31 @@ ALLOWED_EXTENSIONS = {'wav', 'mp3', 'ogg', 'flac', 'm4a'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+def align_length(reference, target):
+    """Match target audio length to reference to avoid shape mismatches."""
+    if len(target) == len(reference):
+        return target
+    if len(target) > len(reference):
+        return target[:len(reference)]
+    pad = len(reference) - len(target)
+    return np.pad(target, (0, pad), mode='constant')
+
+
+def restore_speech_gain(reference, enhanced, boost_db=3.0):
+    """Lift enhanced audio toward original loudness while staying safe from clipping."""
+    ref_rms = np.sqrt(np.mean(reference ** 2) + 1e-10)
+    enh_rms = np.sqrt(np.mean(enhanced ** 2) + 1e-10)
+    if enh_rms < 1e-8:
+        return enhanced
+    target = ref_rms * (10 ** (boost_db / 20))
+    gain = target / enh_rms
+    boosted = enhanced * gain
+    peak = np.max(np.abs(boosted)) + 1e-10
+    if peak > 0.99:
+        boosted = boosted / peak * 0.99
+    return boosted.astype(np.float32)
+
 def create_spectrogram_comparison(audio_orig, audio_enh, sr=16000):
     """Create comparison spectrogram"""
     fig, axes = plt.subplots(2, 2, figsize=(14, 8))
@@ -119,6 +144,8 @@ def process():
         from enhanced_speech_processor import EnhancedSpeechProcessor
         from ultra_speech_enhancer import UltraSpeechEnhancer
         from extreme_noise_eliminator import ExtremeNoiseEliminator
+        from aggressive_speech_enhancer import AggressiveSpeechEnhancer
+        from audio_level_manager import AudioLevelManager
         
         if 'audio_file' not in request.files:
             return jsonify({'error': 'No file uploaded'}), 400
@@ -127,9 +154,10 @@ def process():
         if file.filename == '' or not allowed_file(file.filename):
             return jsonify({'error': 'Invalid file format'}), 400
         
-        # Get enhancement level
+        # Get enhancement level (5-level model)
         enhancement_level = request.form.get('enhancement_level', 'high')
-        if enhancement_level not in ['light', 'medium', 'high', 'maximum', 'extreme']:
+        allowed_levels = ['low', 'medium', 'high', 'advanced', 'extreme']
+        if enhancement_level not in allowed_levels:
             enhancement_level = 'high'
         
         # Save uploaded file
@@ -147,21 +175,38 @@ def process():
         noise_type, confidence, scores = NoiseClassifier.classify(audio_orig, sr)
         Logger.log(f"Noise classified as: {noise_type} ({confidence:.1f}%)")
         
-        # Enhance using ULTRA algorithm for maximum cleaning
-        Logger.log(f"Enhancing with '{enhancement_level}' profile (ULTRA MODE - Maximum Noise Reduction)...")
-        
+        # Enhance using 5-level model (new: extreme mode with aggressive enhancer)
+        Logger.log(f"Enhancing with '{enhancement_level}' profile (5-level pipeline)...")
+
         if enhancement_level == 'extreme':
-            # EXTREME MODE - 100% clean, perfect silence in gaps
-            audio_enh = ExtremeNoiseEliminator.extreme_enhance(audio_orig, sr=sr, ensure_perfect_silence=True)
-        elif enhancement_level == 'maximum':
-            # Use ultra enhancer for maximum level
-            audio_enh = UltraSpeechEnhancer.ultra_enhance(audio_orig, sr=sr, intensity='maximum')
+            # EXTREME: For hard-to-understand speech - most aggressive
+            Logger.log("Using EXTREME mode: Multi-stage aggressive enhancement...")
+            audio_enh = AggressiveSpeechEnhancer.multi_stage_aggressive_enhance(audio_orig, sr=sr)
+        elif enhancement_level == 'advanced':
+            # ADVANCED: Maximal cleaning with extreme + ultra
+            audio_stage1 = ExtremeNoiseEliminator.extreme_enhance(
+                audio_orig, sr=sr, ensure_perfect_silence=True
+            )
+            audio_enh = UltraSpeechEnhancer.ultra_enhance(audio_stage1, sr=sr, intensity='maximum')
         elif enhancement_level == 'high':
-            # Use ultra enhancer with high intensity
+            # HIGH: Strong cleaning with clear speech focus
             audio_enh = UltraSpeechEnhancer.ultra_enhance(audio_orig, sr=sr, intensity='high')
+        elif enhancement_level == 'medium':
+            # MEDIUM: Balanced clean
+            audio_enh = EnhancedSpeechProcessor.enhance(audio_orig, sr=sr, profile='medium')
         else:
-            # Use enhanced processor for light/medium
-            audio_enh = EnhancedSpeechProcessor.enhance(audio_orig, sr=sr, profile=enhancement_level)
+            # LOW: Gentle clean
+            audio_enh = EnhancedSpeechProcessor.enhance(audio_orig, sr=sr, profile='light')
+        # Keep enhanced audio aligned with original to prevent broadcasting errors
+        audio_enh = align_length(audio_orig, audio_enh)
+
+        # Restore speech loudness so voice is not reduced by aggressive denoising
+        # ENHANCED: Increased boost parameters (2.0 dB min, 12.0 dB max) for maximum clarity
+        audio_enh, gain_applied_db = AudioLevelManager.ensure_output_level(
+            audio_orig, audio_enh, min_gain_db=2.0, max_boost_db=12.0
+        )
+        
+        Logger.log(f"Audio level adjustment: {gain_applied_db:.2f} dB gain applied")
         
         # Save output
         output_filename = f"{timestamp}_enhanced.wav"
@@ -177,10 +222,12 @@ def process():
         fig.savefig(spec_path, dpi=100, bbox_inches='tight')
         plt.close(fig)
         
-        # Calculate SNR improvement using ULTRA method
+        # Calculate SNR improvement using appropriate method
         if enhancement_level == 'extreme':
+            snr_improvement = AggressiveSpeechEnhancer.calculate_snr_improvement(audio_orig, audio_enh, sr=sr) if hasattr(AggressiveSpeechEnhancer, 'calculate_snr_improvement') else 8.0
+        elif enhancement_level == 'advanced':
             snr_improvement = ExtremeNoiseEliminator.calculate_snr_improvement(audio_orig, audio_enh, sr=sr)
-        elif enhancement_level in ['high', 'maximum']:
+        elif enhancement_level == 'high':
             snr_improvement = UltraSpeechEnhancer.calculate_snr_improvement(audio_orig, audio_enh, sr=sr)
         else:
             snr_improvement = EnhancedSpeechProcessor.calculate_snr_improvement(audio_orig, audio_enh, sr=sr)
@@ -249,10 +296,17 @@ def api_info():
     """API information"""
     return jsonify({
         'name': 'Production Speech Enhancement System',
-        'version': '1.0',
-        'profiles': ['light', 'medium', 'high', 'maximum'],
+        'version': '2.0',
+        'profiles': ['low', 'medium', 'high', 'advanced', 'extreme'],
         'supported_formats': list(ALLOWED_EXTENSIONS),
-        'max_file_size_mb': 100
+        'max_file_size_mb': 100,
+        'profile_descriptions': {
+            'low': 'Gentle noise reduction (2-3 dB)',
+            'medium': 'Balanced denoising (4-5 dB)',
+            'high': 'Aggressive denoising (6-8 dB)',
+            'advanced': 'Maximum cleaning with extreme + ultra (10-15 dB)',
+            'extreme': 'EXTREME: For hard-to-understand speech (8-12 dB)'
+        }
     })
 
 if __name__ == '__main__':

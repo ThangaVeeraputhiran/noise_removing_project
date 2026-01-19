@@ -4,6 +4,7 @@
     "builder": "dockerfile"
   },
   "deploy": {
+    "port": 5000,
     "restartPolicyType": "on_failure",
     "restartPolicyMaxRetries": 5
   }

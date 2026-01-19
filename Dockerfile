@@ -19,15 +19,20 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application files
 COPY . .
 
+# Copy entrypoint script
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
 # Create necessary directories
 RUN mkdir -p uploads outputs static/spectrograms
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV FLASK_APP=wsgi.py
+ENV PORT=5000
 
-# Expose port (Railway will inject PORT env var)
+# Expose port
 EXPOSE 5000
 
-# Start the application with proper PORT handling
-CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 1 --worker-class sync --timeout 120 --access-logfile - --error-logfile - wsgi:app"]
+# Use entrypoint script for proper PORT handling
+ENTRYPOINT ["/app/entrypoint.sh"]

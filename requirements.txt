@@ -13,21 +13,20 @@ soundfile==0.12.1
 audioread==3.0.1
 resampy==0.4.2
 
-# Scientific Computing - COMPATIBLE
-numpy==1.24.3
-scipy==1.11.4
+# Scientific Computing - Python 3.12 compatible
+numpy==1.26.4
+scipy==1.12.0
 
 # Visualization
 matplotlib==3.8.2
 
-# Audio Processing Support
-numba==0.57.1
+# Audio Processing Support (updated for Python 3.12)
+numba==0.59.1
 cffi==1.16.0
-PySoundFile==0.12.1
 
 # Additional Dependencies
 pooch==1.7.0
 joblib==1.3.2
 threadpoolctl==3.2.0
-LazyLoader==0.3
+lazy-loader==0.3
 

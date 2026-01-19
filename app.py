@@ -20,6 +20,7 @@ import traceback
 
 # Import advanced speech enhancer
 from speech_enhancer_dsp import SpeechEnhancer
+import audio_processor
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB max file size

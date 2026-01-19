@@ -33,6 +33,9 @@ RUN pip install --no-cache-dir -r requirements.txt || pip install --no-cache-dir
 # Copy application files
 COPY . .
 
+# Ensure entrypoint is executable
+RUN chmod +x entrypoint.sh
+
 # Create necessary directories
 RUN mkdir -p uploads outputs static/spectrograms training_data_generated && \
     chown -R nobody:nogroup /app
@@ -40,12 +43,12 @@ RUN mkdir -p uploads outputs static/spectrograms training_data_generated && \
 # Use non-root user for security
 USER nobody
 
-# Health check
+# Health check (use provided PORT if set)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health', timeout=5).read()" || exit 1
+    CMD python -c "import os, urllib.request; port=os.environ.get('PORT','5000'); urllib.request.urlopen(f'http://localhost:{port}/health', timeout=5).read()" || exit 1
 
-# Expose port
+# Expose default port (Railway will set PORT)
 EXPOSE 5000
 
-# Direct startup command - no entrypoint script needed
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "--worker-class", "sync", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-", "app_production:app"]
+# Use entrypoint to honor dynamic PORT
+ENTRYPOINT ["./entrypoint.sh"]

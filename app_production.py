@@ -40,7 +40,6 @@ print("✅ Numba JIT is DISABLED - No cache errors possible")
 print("")
 
 import numpy as np
-import librosa
 import soundfile as sf
 from flask import Flask, request, render_template, send_file, jsonify, url_for
 from werkzeug.utils import secure_filename
@@ -50,6 +49,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import traceback
 import json
+from scipy import signal as scipy_signal
 
 # Import production system - ONLY if actually needed (lazy import in routes)
 # This prevents blocking on startup
@@ -117,24 +117,43 @@ def restore_speech_gain(reference, enhanced, boost_db=3.0):
         boosted = boosted / peak * 0.99
     return boosted.astype(np.float32)
 
+def _power_to_db(S, top_db=80.0):
+    S = np.asarray(S)
+    ref = np.max(S) if S.size else 1.0
+    S = np.maximum(S, 1e-10)
+    S_db = 10.0 * np.log10(S / (ref if ref > 0 else 1.0))
+    if top_db is not None:
+        S_db = np.maximum(S_db, S_db.max() - float(top_db))
+    return S_db
+
+def _spectrogram_db(y, sr, n_fft=2048, hop_length=512, top_db=80.0):
+    f, t, Zxx = scipy_signal.stft(
+        y,
+        fs=sr,
+        nperseg=n_fft,
+        noverlap=n_fft - hop_length,
+        boundary=None,
+        padded=False,
+    )
+    S = np.abs(Zxx) ** 2
+    return _power_to_db(S, top_db=top_db)
+
 def create_spectrogram_comparison(audio_orig, audio_enh, sr=16000):
-    """Create comparison spectrogram"""
+    """Create comparison spectrogram (librosa-free)"""
     fig, axes = plt.subplots(2, 2, figsize=(14, 8))
     
     # Original spectrogram
-    D_orig = librosa.stft(audio_orig, n_fft=2048, hop_length=512)
-    S_orig_db = librosa.power_to_db(np.abs(D_orig) ** 2, ref=np.max, top_db=80)
+    S_orig_db = _spectrogram_db(audio_orig, sr=sr, n_fft=2048, hop_length=512, top_db=80)
     img1 = axes[0, 0].imshow(S_orig_db, aspect='auto', origin='lower', cmap='viridis')
     axes[0, 0].set_title('Original (Noisy) Spectrogram', fontsize=12, fontweight='bold')
-    axes[0, 0].set_ylabel('Frequency (Hz)')
+    axes[0, 0].set_ylabel('Frequency (bins)')
     plt.colorbar(img1, ax=axes[0, 0], label='dB')
     
     # Enhanced spectrogram
-    D_enh = librosa.stft(audio_enh, n_fft=2048, hop_length=512)
-    S_enh_db = librosa.power_to_db(np.abs(D_enh) ** 2, ref=np.max, top_db=80)
+    S_enh_db = _spectrogram_db(audio_enh, sr=sr, n_fft=2048, hop_length=512, top_db=80)
     img2 = axes[0, 1].imshow(S_enh_db, aspect='auto', origin='lower', cmap='viridis')
     axes[0, 1].set_title('Enhanced (Denoised) Spectrogram', fontsize=12, fontweight='bold')
-    axes[0, 1].set_ylabel('Frequency (Hz)')
+    axes[0, 1].set_ylabel('Frequency (bins)')
     plt.colorbar(img2, ax=axes[0, 1], label='dB')
     
     # Original waveform
@@ -418,11 +437,8 @@ def test_imports():
     except Exception as e:
         results['numpy'] = {'status': 'error', 'error': str(e)}
     
-    try:
-        import librosa
-        results['librosa'] = {'status': 'ok', 'version': librosa.__version__}
-    except Exception as e:
-        results['librosa'] = {'status': 'error', 'error': str(e)}
+    # Skip importing librosa to avoid numba-related issues entirely
+    results['librosa'] = {'status': 'skipped', 'reason': 'disabled to avoid numba dependency'}
     
     try:
         import numba
@@ -467,14 +483,8 @@ def diagnostics():
     except Exception as e:
         numba_info = {'error': str(e)}
     
-    librosa_info = {}
-    try:
-        librosa_info = {
-            'version': librosa.__version__,
-            'backend': librosa.get_samplerate.__module__ if hasattr(librosa, 'get_samplerate') else 'unknown'
-        }
-    except Exception as e:
-        librosa_info = {'error': str(e)}
+    # Do not import librosa in diagnostics to prevent numba issues
+    librosa_info = {'status': 'disabled', 'reason': 'librosa import skipped to avoid numba'}
     
     return jsonify({
         'status': 'ok',

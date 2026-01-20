@@ -5,21 +5,11 @@ set -e
 # Get PORT from environment or default to 5000
 PORT=${PORT:-5000}
 
-# Fix numba caching issues in production
-# Default: JIT DISABLED (1) for stability - set to 0 in Railway to enable
-export NUMBA_DISABLE_JIT=${NUMBA_DISABLE_JIT:-1}
-export NUMBA_CACHE_DIR=${NUMBA_CACHE_DIR:-/tmp/numba_cache}
-
-echo "NUMBA_DISABLE_JIT: $NUMBA_DISABLE_JIT"
-echo "NUMBA_CACHE_DIR: $NUMBA_CACHE_DIR"
-
-# Only create cache dir if JIT is enabled
-if [ "$NUMBA_DISABLE_JIT" = "0" ]; then
-    mkdir -p "$NUMBA_CACHE_DIR"
-    echo "Numba cache directory created (JIT enabled)"
-else
-    echo "Numba JIT disabled - no cache needed (slower but stable)"
-fi
+# CRITICAL: Set numba environment variables BEFORE Python starts
+export NUMBA_DISABLE_JIT=1
+export NUMBA_CACHE_DIR=/tmp/numba_cache
+export NUMBA_WARNINGS=0
+export PYTHONWARNINGS=ignore
 
 echo "========================================="
 echo "Starting AI Speech Enhancement System v2.1"
@@ -28,13 +18,15 @@ echo "PORT: $PORT"
 echo "Environment: Production"
 echo "Python: $(python --version)"
 echo "Directory: $(pwd)"
+echo "NUMBA_DISABLE_JIT: $NUMBA_DISABLE_JIT (MUST BE 1)"
+echo "NUMBA_CACHE_DIR: $NUMBA_CACHE_DIR"
 echo "========================================="
 
 # Create necessary directories
 mkdir -p uploads outputs static/spectrograms
 
 # Run gunicorn with optimized settings for Railway
-# Removed --preload-app for faster startup and better healthcheck response
+# Using wsgi_production.py to ensure env vars are set before any imports
 exec gunicorn \
     --bind 0.0.0.0:${PORT} \
     --workers 1 \
@@ -47,4 +39,4 @@ exec gunicorn \
     --error-logfile - \
     --log-level info \
     --capture-output \
-    app_production:app
+    wsgi_production:app

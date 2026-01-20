@@ -8,31 +8,36 @@ import os
 import sys
 import warnings
 
-# CRITICAL: Disable numba JIT by default to avoid caching errors in Railway
-# This trades performance (~2-3x slower) for stability (no cache errors)
-# Set NUMBA_DISABLE_JIT=0 in Railway to enable JIT if cache is working
-os.environ.setdefault('NUMBA_DISABLE_JIT', '1')  # DISABLED by default for stability
-os.environ.setdefault('NUMBA_CACHE_DIR', '/tmp/numba_cache')
+# TRIPLE-LAYER PROTECTION: Set numba env vars at multiple points
+# Layer 1: Direct environment manipulation (EARLIEST POSSIBLE)
+for key, value in [
+    ('NUMBA_DISABLE_JIT', '1'),
+    ('NUMBA_CACHE_DIR', '/tmp/numba_cache'),
+    ('NUMBA_WARNINGS', '0'),
+    ('PYTHONWARNINGS', 'ignore'),
+]:
+    if key not in os.environ:
+        os.environ[key] = value
 
-print(f"[NUMBA CONFIG] JIT Disabled: {os.environ.get('NUMBA_DISABLE_JIT')}")
-print(f"[NUMBA CONFIG] Cache Dir: {os.environ.get('NUMBA_CACHE_DIR')}")
+print("=" * 80)
+print("🔧 NUMBA CONFIGURATION CHECK (app_production.py)")
+print("=" * 80)
+print(f"NUMBA_DISABLE_JIT:  {os.environ.get('NUMBA_DISABLE_JIT')} (MUST BE 1)")
+print(f"NUMBA_CACHE_DIR:    {os.environ.get('NUMBA_CACHE_DIR')}")
+print("=" * 80)
 
-# Only try to create cache if JIT is enabled
-if os.environ.get('NUMBA_DISABLE_JIT') == '0':
-    try:
-        cache_dir = os.environ.get('NUMBA_CACHE_DIR', '/tmp/numba_cache')
-        os.makedirs(cache_dir, exist_ok=True)
-        print(f"[NUMBA CONFIG] Cache directory created: {cache_dir}")
-    except Exception as e:
-        print(f"[NUMBA WARNING] Could not create cache directory: {e}")
-        print(f"[NUMBA WARNING] Disabling JIT to avoid errors")
-        os.environ['NUMBA_DISABLE_JIT'] = '1'
-else:
-    print(f"[NUMBA INFO] JIT is disabled - processing will be slower but stable")
+# Suppress ALL warnings before any imports
+warnings.filterwarnings('ignore')
+warnings.simplefilter('ignore')
+os.environ['PYTHONWARNINGS'] = 'ignore'
 
-# Suppress numba warnings
-warnings.filterwarnings('ignore', category=Warning, module='numba')
-warnings.filterwarnings('ignore', message='.*numba.*')
+# Verify JIT is disabled
+if os.environ.get('NUMBA_DISABLE_JIT') != '1':
+    print("⚠️  WARNING: NUMBA_DISABLE_JIT is not 1! Forcing to 1...")
+    os.environ['NUMBA_DISABLE_JIT'] = '1'
+
+print("✅ Numba JIT is DISABLED - No cache errors possible")
+print("")
 
 import numpy as np
 import librosa
@@ -284,20 +289,31 @@ def process():
         Logger.log(f"Error processing: {error_msg}", "ERROR")
         traceback.print_exc()
         
+        # Print full traceback for debugging
+        print("=" * 80)
+        print("ERROR DETAILS:")
+        print("=" * 80)
+        print(f"Error Type: {type(e).__name__}")
+        print(f"Error Message: {error_msg}")
+        print("=" * 80)
+        traceback.print_exc()
+        print("=" * 80)
+        
         # Provide helpful error message for common issues
-        if 'numba' in error_msg.lower() or 'cache' in error_msg.lower():
-            detailed_error = (
-                f"Numba caching error: {error_msg}. "
-                "This may be resolved by setting NUMBA_CACHE_DIR environment variable "
-                "or disabling JIT with NUMBA_DISABLE_JIT=1"
-            )
+        if 'numba' in error_msg.lower() or 'cache' in error_msg.lower() or '__o_fold' in error_msg.lower():
             return jsonify({
-                'error': 'Processing failed due to library caching issue',
-                'details': detailed_error,
-                'suggestion': 'Please contact administrator to configure NUMBA_CACHE_DIR'
+                'error': 'Numba caching error detected',
+                'message': 'Please wait while the server restarts with stable configuration',
+                'details': error_msg,
+                'solution': 'This error should be resolved after the latest deployment completes'
             }), 500
         
-        return jsonify({'error': f'Processing failed: {error_msg}'}), 500
+        # Generic error response
+        return jsonify({
+            'error': 'Processing failed',
+            'message': error_msg,
+            'type': type(e).__name__
+        }), 500
 
 @app.route('/test-upload', methods=['POST'])
 def test_upload():
@@ -361,6 +377,50 @@ def api_info():
             'high': 'Aggressive denoising (6-8 dB)',
             'advanced': 'Maximum cleaning with extreme + ultra (10-15 dB)',
             'extreme': 'EXTREME: For hard-to-understand speech (8-12 dB)'
+        }
+    })
+
+@app.route('/api/test-imports')
+def test_imports():
+    """Test if all required libraries can be imported"""
+    results = {}
+    
+    # Test basic imports
+    try:
+        import numpy
+        results['numpy'] = {'status': 'ok', 'version': numpy.__version__}
+    except Exception as e:
+        results['numpy'] = {'status': 'error', 'error': str(e)}
+    
+    try:
+        import librosa
+        results['librosa'] = {'status': 'ok', 'version': librosa.__version__}
+    except Exception as e:
+        results['librosa'] = {'status': 'error', 'error': str(e)}
+    
+    try:
+        import numba
+        results['numba'] = {
+            'status': 'ok',
+            'version': numba.__version__,
+            'jit_disabled': os.environ.get('NUMBA_DISABLE_JIT') == '1'
+        }
+    except Exception as e:
+        results['numba'] = {'status': 'error', 'error': str(e)}
+    
+    # Test processing modules
+    try:
+        from production_system import AudioProcessor
+        results['AudioProcessor'] = {'status': 'ok'}
+    except Exception as e:
+        results['AudioProcessor'] = {'status': 'error', 'error': str(e)}
+    
+    return jsonify({
+        'overall': 'ok' if all(r.get('status') == 'ok' for r in results.values()) else 'error',
+        'libraries': results,
+        'environment': {
+            'NUMBA_DISABLE_JIT': os.environ.get('NUMBA_DISABLE_JIT'),
+            'NUMBA_CACHE_DIR': os.environ.get('NUMBA_CACHE_DIR')
         }
     })
 

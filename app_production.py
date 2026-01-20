@@ -174,15 +174,29 @@ def upload_test():
 @app.route('/process', methods=['POST'])
 def process():
     """Process audio file with enhanced algorithm"""
+    
+    # FALLBACK STRATEGY: Try complex processors, fall back to simple if they fail
+    use_simple_processor = False
+    processor_error = None
+    
     try:
-        # Import heavy modules only when needed
+        # Try importing complex modules
         from production_system import AdvancedSpeechEnhancer, NoiseClassifier, AudioProcessor, Logger
         from enhanced_speech_processor import EnhancedSpeechProcessor
         from ultra_speech_enhancer import UltraSpeechEnhancer
         from extreme_noise_eliminator import ExtremeNoiseEliminator
         from aggressive_speech_enhancer import AggressiveSpeechEnhancer
         from audio_level_manager import AudioLevelManager
-        
+        print("✅ Complex processors loaded successfully")
+    except Exception as e:
+        use_simple_processor = True
+        processor_error = str(e)
+        print(f"⚠️  Complex processors failed, using simple processor: {e}")
+        from simple_processor import SimpleAudioProcessor as AudioProcessor
+        from simple_processor import SimpleLogger as Logger
+        from simple_processor import SimpleAudioProcessor as NoiseClassifier
+    
+    try:
         if 'audio_file' not in request.files:
             return jsonify({'error': 'No file uploaded'}), 400
         
@@ -203,51 +217,67 @@ def process():
         file.save(input_path)
         
         Logger.log(f"Processing uploaded file: {filename}")
+        if use_simple_processor:
+            Logger.log(f"Using SIMPLE processor (fallback mode)")
         
         # Load audio
         audio_orig, sr = AudioProcessor.load_audio(input_path)
         
-        # Classify noise
-        noise_type, confidence, scores = NoiseClassifier.classify(audio_orig, sr)
-        Logger.log(f"Noise classified as: {noise_type} ({confidence:.1f}%)")
-        
-        # Enhance using 5-level model (new: extreme mode with aggressive enhancer)
-        Logger.log(f"Enhancing with '{enhancement_level}' profile (5-level pipeline)...")
-
-        if enhancement_level == 'extreme':
-            # EXTREME: For hard-to-understand speech - most aggressive
-            Logger.log("Using EXTREME mode: Multi-stage aggressive enhancement...")
-            audio_enh = AggressiveSpeechEnhancer.multi_stage_aggressive_enhance(audio_orig, sr=sr)
-        elif enhancement_level == 'advanced':
-            # ADVANCED: Maximal cleaning with extreme + ultra
-            audio_stage1 = ExtremeNoiseEliminator.extreme_enhance(
-                audio_orig, sr=sr, ensure_perfect_silence=True
-            )
-            audio_enh = UltraSpeechEnhancer.ultra_enhance(audio_stage1, sr=sr, intensity='maximum')
-        elif enhancement_level == 'high':
-            # HIGH: Strong cleaning with clear speech focus
-            audio_enh = UltraSpeechEnhancer.ultra_enhance(audio_orig, sr=sr, intensity='high')
-        elif enhancement_level == 'medium':
-            # MEDIUM: Balanced clean
-            audio_enh = EnhancedSpeechProcessor.enhance(audio_orig, sr=sr, profile='medium')
+        # Process based on mode
+        if use_simple_processor:
+            # SIMPLE MODE - No numba dependencies
+            Logger.log("Simple mode: Basic spectral subtraction")
+            noise_type, confidence = NoiseClassifier.classify_noise(audio_orig, sr)
+            audio_enh = AudioProcessor.enhance(audio_orig, sr, enhancement_level)
+            snr_improvement = AudioProcessor.calculate_snr(audio_orig, audio_enh)
+            
         else:
-            # LOW: Gentle clean
-            audio_enh = EnhancedSpeechProcessor.enhance(audio_orig, sr=sr, profile='light')
-        # Keep enhanced audio aligned with original to prevent broadcasting errors
-        audio_enh = align_length(audio_orig, audio_enh)
+            # COMPLEX MODE - Full pipeline
+            # Classify noise
+            noise_type, confidence, scores = NoiseClassifier.classify(audio_orig, sr)
+            Logger.log(f"Noise classified as: {noise_type} ({confidence:.1f}%)")
+            
+            # Enhance using 5-level model
+            Logger.log(f"Enhancing with '{enhancement_level}' profile (5-level pipeline)...")
 
-        # Restore speech loudness so voice is not reduced by aggressive denoising
-        # ENHANCED: Increased boost parameters (2.0 dB min, 12.0 dB max) for maximum clarity
-        audio_enh, gain_applied_db = AudioLevelManager.ensure_output_level(
-            audio_orig, audio_enh, min_gain_db=2.0, max_boost_db=12.0
-        )
-        
-        Logger.log(f"Audio level adjustment: {gain_applied_db:.2f} dB gain applied")
+            if enhancement_level == 'extreme':
+                Logger.log("Using EXTREME mode: Multi-stage aggressive enhancement...")
+                audio_enh = AggressiveSpeechEnhancer.multi_stage_aggressive_enhance(audio_orig, sr=sr)
+            elif enhancement_level == 'advanced':
+                audio_stage1 = ExtremeNoiseEliminator.extreme_enhance(
+                    audio_orig, sr=sr, ensure_perfect_silence=True
+                )
+                audio_enh = UltraSpeechEnhancer.ultra_enhance(audio_stage1, sr=sr, intensity='maximum')
+            elif enhancement_level == 'high':
+                audio_enh = UltraSpeechEnhancer.ultra_enhance(audio_orig, sr=sr, intensity='high')
+            elif enhancement_level == 'medium':
+                audio_enh = EnhancedSpeechProcessor.enhance(audio_orig, sr=sr, profile='medium')
+            else:
+                audio_enh = EnhancedSpeechProcessor.enhance(audio_orig, sr=sr, profile='light')
+            
+            # Align and restore
+            audio_enh = align_length(audio_orig, audio_enh)
+            audio_enh = restore_speech_gain(audio_orig, audio_enh, boost_db=3.0)
+            
+            # Calculate SNR
+            if enhancement_level == 'extreme':
+                snr_improvement = AggressiveSpeechEnhancer.calculate_snr_improvement(audio_orig, audio_enh, sr=sr) if hasattr(AggressiveSpeechEnhancer, 'calculate_snr_improvement') else 8.0
+            elif enhancement_level == 'advanced':
+                snr_improvement = ExtremeNoiseEliminator.calculate_snr_improvement(audio_orig, audio_enh, sr=sr)
+            elif enhancement_level == 'high':
+                snr_improvement = UltraSpeechEnhancer.calculate_snr_improvement(audio_orig, audio_enh, sr=sr)
+            else:
+                snr_improvement = EnhancedSpeechProcessor.calculate_snr_improvement(audio_orig, audio_enh, sr=sr)
         
         # Save output
         output_filename = f"{timestamp}_enhanced.wav"
         output_path = os.path.join(app.config['OUTPUT_FOLDER'], output_filename)
-        AudioProcessor.save_audio(audio_enh, output_path, sr=sr)
+        
+        # Use simple save if needed
+        if use_simple_processor:
+            AudioProcessor.save_audio(audio_enh, output_path, sr)
+        else:
+            AudioProcessor.save_audio(audio_enh, output_path, sr=sr)
         
         # Create spectrogram
         Logger.log("Creating spectrogram comparison...")
@@ -258,31 +288,27 @@ def process():
         fig.savefig(spec_path, dpi=100, bbox_inches='tight')
         plt.close(fig)
         
-        # Calculate SNR improvement using appropriate method
-        if enhancement_level == 'extreme':
-            snr_improvement = AggressiveSpeechEnhancer.calculate_snr_improvement(audio_orig, audio_enh, sr=sr) if hasattr(AggressiveSpeechEnhancer, 'calculate_snr_improvement') else 8.0
-        elif enhancement_level == 'advanced':
-            snr_improvement = ExtremeNoiseEliminator.calculate_snr_improvement(audio_orig, audio_enh, sr=sr)
-        elif enhancement_level == 'high':
-            snr_improvement = UltraSpeechEnhancer.calculate_snr_improvement(audio_orig, audio_enh, sr=sr)
-        else:
-            snr_improvement = EnhancedSpeechProcessor.calculate_snr_improvement(audio_orig, audio_enh, sr=sr)
-        
         duration = len(audio_enh) / sr
         
         Logger.log(f"Processing complete. SNR improvement: {snr_improvement:.2f} dB")
         
-        return jsonify({
+        response_data = {
             'success': True,
             'output_file': output_filename,
             'spectrogram': spec_filename,
             'noise_type': noise_type,
-            'confidence': f"{confidence:.1f}",
+            'confidence': f"{confidence:.1f}" if isinstance(confidence, float) else str(confidence),
             'snr_improvement': f"{snr_improvement:.2f}",
             'duration': f"{duration:.2f}",
             'enhancement_level': enhancement_level,
             'download_url': url_for('download', filename=output_filename)
-        })
+        }
+        
+        if use_simple_processor:
+            response_data['mode'] = 'simple'
+            response_data['note'] = 'Using fallback processor (numba-free mode)'
+        
+        return jsonify(response_data)
     
     except Exception as e:
         error_msg = str(e)

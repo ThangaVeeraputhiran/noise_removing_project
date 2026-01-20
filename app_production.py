@@ -344,20 +344,60 @@ def process():
         traceback.print_exc()
         print("=" * 80)
         
-        # Provide helpful error message for common issues
-        if 'numba' in error_msg.lower() or 'cache' in error_msg.lower() or '__o_fold' in error_msg.lower():
-            return jsonify({
-                'error': 'Numba caching error detected',
-                'message': 'Please wait while the server restarts with stable configuration',
-                'details': error_msg,
-                'solution': 'This error should be resolved after the latest deployment completes'
-            }), 500
+        # If this looks like a numba/librosa caching issue, FALL BACK to simple processor
+        numba_like = any(k in error_msg.lower() for k in ['numba', 'cache', '__o_fold'])
+        try:
+            if numba_like and 'input_path' in locals() and os.path.exists(input_path):
+                from simple_processor import SimpleAudioProcessor as Simple
+                from simple_processor import SimpleLogger as SimpleLog
+                SimpleLog.log("Fallback activated: processing with SimpleAudioProcessor (numba-free)")
+                
+                # Load and process using simple pipeline
+                audio_orig_fallback, sr_fb = Simple.load_audio(input_path)
+                level_fb = enhancement_level if 'enhancement_level' in locals() else 'medium'
+                noise_type_fb, confidence_fb = Simple.classify_noise(audio_orig_fallback, sr_fb)
+                audio_enh_fb = Simple.enhance(audio_orig_fallback, sr_fb, level_fb)
+                
+                # Save output
+                ts_fb = timestamp if 'timestamp' in locals() else datetime.now().strftime('%Y%m%d_%H%M%S')
+                output_filename_fb = f"{ts_fb}_enhanced_fallback.wav"
+                output_path_fb = os.path.join(app.config['OUTPUT_FOLDER'], output_filename_fb)
+                Simple.save_audio(audio_enh_fb, output_path_fb, sr_fb)
+                
+                # Spectrogram (SciPy-based)
+                spec_filename_fb = f"{ts_fb}_spectrogram_fallback.png"
+                spec_path_fb = os.path.join(app.config['SPECTROGRAMS'], spec_filename_fb)
+                fig_fb = create_spectrogram_comparison(audio_orig_fallback, audio_enh_fb, sr=sr_fb)
+                fig_fb.savefig(spec_path_fb, dpi=100, bbox_inches='tight')
+                plt.close(fig_fb)
+                
+                # Metrics
+                snr_fb = Simple.calculate_snr(audio_orig_fallback, audio_enh_fb)
+                duration_fb = len(audio_enh_fb) / sr_fb
+                
+                return jsonify({
+                    'success': True,
+                    'mode': 'simple',
+                    'note': 'Processed via fallback (numba-free) due to library issue',
+                    'output_file': output_filename_fb,
+                    'spectrogram': spec_filename_fb,
+                    'noise_type': noise_type_fb,
+                    'confidence': f"{confidence_fb:.1f}",
+                    'snr_improvement': f"{snr_fb:.2f}",
+                    'duration': f"{duration_fb:.2f}",
+                    'enhancement_level': level_fb,
+                    'download_url': url_for('download', filename=output_filename_fb)
+                })
+        except Exception as fb_err:
+            Logger.log(f"Fallback processing failed: {fb_err}", "ERROR")
+            traceback.print_exc()
         
-        # Generic error response
+        # If fallback not performed or failed, return structured error
         return jsonify({
             'error': 'Processing failed',
             'message': error_msg,
-            'type': type(e).__name__
+            'type': type(e).__name__,
+            'hint': 'Fallback attempted' if numba_like else 'See server logs'
         }), 500
 
 @app.route('/test-upload', methods=['POST'])

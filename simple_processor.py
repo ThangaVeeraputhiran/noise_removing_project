@@ -9,32 +9,45 @@ import numpy as np
 import soundfile as sf
 from scipy import signal
 from scipy.fftpack import fft, ifft
+from datetime import datetime
 
 class SimpleAudioProcessor:
     """Simple processor without numba dependencies"""
     
     @staticmethod
     def load_audio(file_path, sr=16000):
-        """Load audio file"""
+        """Load audio file with robust fallback (supports WAV/FLAC/OGG/MP3)."""
+        # First try soundfile (fast path for WAV/FLAC/OGG)
         try:
-            audio, sample_rate = sf.read(file_path)
-            
-            # Convert to mono if stereo
-            if len(audio.shape) > 1:
+            audio, sample_rate = sf.read(file_path, always_2d=False)
+            if np.ndim(audio) > 1:
                 audio = np.mean(audio, axis=1)
-            
-            # Resample if needed (simple decimation/interpolation)
-            if sample_rate != sr:
-                num_samples = int(len(audio) * sr / sample_rate)
-                audio = signal.resample(audio, num_samples)
-            
-            # Normalize
-            if np.max(np.abs(audio)) > 0:
-                audio = audio / np.max(np.abs(audio)) * 0.95
-            
-            return audio.astype(np.float32), sr
-        except Exception as e:
-            raise Exception(f"Error loading audio: {str(e)}")
+        except Exception:
+            # Fallback to audioread for MP3/others
+            try:
+                import audioread
+                with audioread.audio_open(file_path) as f:
+                    sample_rate = f.samplerate
+                    channels = f.channels
+                    buf = bytearray()
+                    for block in f:
+                        buf.extend(block)
+                audio = np.frombuffer(bytes(buf), dtype=np.int16).astype(np.float32) / 32768.0
+                if channels > 1:
+                    audio = audio.reshape(-1, channels).mean(axis=1)
+            except Exception as e:
+                raise Exception(f"Error loading audio: {str(e)}")
+
+        # Resample if needed
+        if sample_rate != sr and len(audio) > 0:
+            num_samples = int(len(audio) * sr / sample_rate)
+            audio = signal.resample(audio, num_samples)
+
+        # Normalize
+        if np.max(np.abs(audio)) > 0:
+            audio = audio / np.max(np.abs(audio)) * 0.95
+
+        return audio.astype(np.float32), sr
     
     @staticmethod
     def save_audio(audio, file_path, sr=16000):

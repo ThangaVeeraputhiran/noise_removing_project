@@ -16,18 +16,21 @@ Variable Name: PYTHONUNBUFFERED
 Value: 1
 ```
 
-#### 3. Numba Cache Directory (REQUIRED - Fixes Librosa Error)
+#### 3. Numba Cache Directory (AUTO-CONFIGURED)
 ```
 Variable Name: NUMBA_CACHE_DIR
 Value: /tmp/numba_cache
 ```
+**Note**: Auto-set in Dockerfile. Only needed if you enable JIT.
 
-#### 4. Numba JIT Control (OPTIONAL - Fallback if caching fails)
+#### 4. Numba JIT Control (DEFAULT: DISABLED for stability)
 ```
 Variable Name: NUMBA_DISABLE_JIT
-Value: 0
+Value: 1 (DISABLED - default, stable)
+       0 (ENABLED - faster but may have cache errors)
 ```
-**Note**: If you still get caching errors, try setting this to `1` (disables JIT, slower but more stable)
+**Current Default**: `1` (disabled) - This avoids ALL caching errors but is 2-3x slower.  
+**To enable JIT**: Set to `0` in Railway (faster but requires working cache).
 
 #### 5. Flask App (AUTO-SET in Dockerfile, but can verify)
 ```
@@ -62,11 +65,13 @@ RAILWAY_HEALTHCHECK_TIMEOUT_SEC=300
 
 - [x] Set `RAILWAY_HEALTHCHECK_TIMEOUT_SEC=300`
 - [x] Set `PYTHONUNBUFFERED=1`
-- [x] Set `NUMBA_CACHE_DIR=/tmp/numba_cache` (fixes librosa caching error)
+- [x] ✅ `NUMBA_DISABLE_JIT=1` (default - JIT disabled for stability)
 - [x] Healthcheck path is `/health`
 - [x] Commit and push code changes
 - [x] Wait for Railway to auto-deploy
 - [x] Monitor deployment logs for healthcheck success
+
+**Note**: With JIT disabled (default), processing is 2-3x slower but 100% stable with NO cache errors!
 
 ---
 

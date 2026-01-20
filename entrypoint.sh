@@ -6,9 +6,20 @@ set -e
 PORT=${PORT:-5000}
 
 # Fix numba caching issues in production
+# Default: JIT DISABLED (1) for stability - set to 0 in Railway to enable
+export NUMBA_DISABLE_JIT=${NUMBA_DISABLE_JIT:-1}
 export NUMBA_CACHE_DIR=${NUMBA_CACHE_DIR:-/tmp/numba_cache}
-export NUMBA_DISABLE_JIT=${NUMBA_DISABLE_JIT:-0}
-mkdir -p "$NUMBA_CACHE_DIR"
+
+echo "NUMBA_DISABLE_JIT: $NUMBA_DISABLE_JIT"
+echo "NUMBA_CACHE_DIR: $NUMBA_CACHE_DIR"
+
+# Only create cache dir if JIT is enabled
+if [ "$NUMBA_DISABLE_JIT" = "0" ]; then
+    mkdir -p "$NUMBA_CACHE_DIR"
+    echo "Numba cache directory created (JIT enabled)"
+else
+    echo "Numba JIT disabled - no cache needed (slower but stable)"
+fi
 
 echo "========================================="
 echo "Starting AI Speech Enhancement System v2.1"

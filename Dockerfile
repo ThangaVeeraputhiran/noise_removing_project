@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     FLASK_APP=app_production.py \
     NUMBA_CACHE_DIR=/tmp/numba_cache \
-    NUMBA_DISABLE_JIT=0
+    NUMBA_DISABLE_JIT=1
 
 # Install system dependencies for audio processing
 RUN apt-get update && apt-get install -y --no-install-recommends \

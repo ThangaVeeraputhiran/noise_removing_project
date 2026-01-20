@@ -8,19 +8,27 @@ import os
 import sys
 import warnings
 
-# Configure numba cache BEFORE importing librosa/numba-dependent libraries
+# CRITICAL: Disable numba JIT by default to avoid caching errors in Railway
+# This trades performance (~2-3x slower) for stability (no cache errors)
+# Set NUMBA_DISABLE_JIT=0 in Railway to enable JIT if cache is working
+os.environ.setdefault('NUMBA_DISABLE_JIT', '1')  # DISABLED by default for stability
 os.environ.setdefault('NUMBA_CACHE_DIR', '/tmp/numba_cache')
-os.environ.setdefault('NUMBA_DISABLE_JIT', '0')
 
-# Create cache directory if it doesn't exist
-try:
-    cache_dir = os.environ.get('NUMBA_CACHE_DIR', '/tmp/numba_cache')
-    os.makedirs(cache_dir, exist_ok=True)
-except Exception as e:
-    print(f"Warning: Could not create numba cache directory: {e}")
-    # Fallback: disable JIT if cache creation fails
-    os.environ['NUMBA_DISABLE_JIT'] = '1'
-    warnings.warn("Numba JIT disabled due to cache directory error - performance may be slower")
+print(f"[NUMBA CONFIG] JIT Disabled: {os.environ.get('NUMBA_DISABLE_JIT')}")
+print(f"[NUMBA CONFIG] Cache Dir: {os.environ.get('NUMBA_CACHE_DIR')}")
+
+# Only try to create cache if JIT is enabled
+if os.environ.get('NUMBA_DISABLE_JIT') == '0':
+    try:
+        cache_dir = os.environ.get('NUMBA_CACHE_DIR', '/tmp/numba_cache')
+        os.makedirs(cache_dir, exist_ok=True)
+        print(f"[NUMBA CONFIG] Cache directory created: {cache_dir}")
+    except Exception as e:
+        print(f"[NUMBA WARNING] Could not create cache directory: {e}")
+        print(f"[NUMBA WARNING] Disabling JIT to avoid errors")
+        os.environ['NUMBA_DISABLE_JIT'] = '1'
+else:
+    print(f"[NUMBA INFO] JIT is disabled - processing will be slower but stable")
 
 # Suppress numba warnings
 warnings.filterwarnings('ignore', category=Warning, module='numba')

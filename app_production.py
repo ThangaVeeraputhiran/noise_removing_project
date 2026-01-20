@@ -6,6 +6,26 @@ Full-featured web interface with advanced denoising
 
 import os
 import sys
+import warnings
+
+# Configure numba cache BEFORE importing librosa/numba-dependent libraries
+os.environ.setdefault('NUMBA_CACHE_DIR', '/tmp/numba_cache')
+os.environ.setdefault('NUMBA_DISABLE_JIT', '0')
+
+# Create cache directory if it doesn't exist
+try:
+    cache_dir = os.environ.get('NUMBA_CACHE_DIR', '/tmp/numba_cache')
+    os.makedirs(cache_dir, exist_ok=True)
+except Exception as e:
+    print(f"Warning: Could not create numba cache directory: {e}")
+    # Fallback: disable JIT if cache creation fails
+    os.environ['NUMBA_DISABLE_JIT'] = '1'
+    warnings.warn("Numba JIT disabled due to cache directory error - performance may be slower")
+
+# Suppress numba warnings
+warnings.filterwarnings('ignore', category=Warning, module='numba')
+warnings.filterwarnings('ignore', message='.*numba.*')
+
 import numpy as np
 import librosa
 import soundfile as sf
@@ -252,9 +272,24 @@ def process():
         })
     
     except Exception as e:
-        Logger.log(f"Error processing: {str(e)}", "ERROR")
+        error_msg = str(e)
+        Logger.log(f"Error processing: {error_msg}", "ERROR")
         traceback.print_exc()
-        return jsonify({'error': f'Processing failed: {str(e)}'}), 500
+        
+        # Provide helpful error message for common issues
+        if 'numba' in error_msg.lower() or 'cache' in error_msg.lower():
+            detailed_error = (
+                f"Numba caching error: {error_msg}. "
+                "This may be resolved by setting NUMBA_CACHE_DIR environment variable "
+                "or disabling JIT with NUMBA_DISABLE_JIT=1"
+            )
+            return jsonify({
+                'error': 'Processing failed due to library caching issue',
+                'details': detailed_error,
+                'suggestion': 'Please contact administrator to configure NUMBA_CACHE_DIR'
+            }), 500
+        
+        return jsonify({'error': f'Processing failed: {error_msg}'}), 500
 
 @app.route('/test-upload', methods=['POST'])
 def test_upload():
@@ -286,12 +321,21 @@ def download(filename):
 
 @app.route('/health')
 def health():
-    """Health check"""
+    """Health check with system configuration info"""
+    numba_cache_dir = os.environ.get('NUMBA_CACHE_DIR', 'not set')
+    numba_jit_status = os.environ.get('NUMBA_DISABLE_JIT', '0')
+    cache_exists = os.path.exists(numba_cache_dir) if numba_cache_dir != 'not set' else False
+    
     return jsonify({
         'status': 'healthy',
         'system': 'Production Speech Enhancement',
         'version': '1.0',
-        'timestamp': datetime.now().isoformat()
+        'timestamp': datetime.now().isoformat(),
+        'config': {
+            'numba_cache_dir': numba_cache_dir,
+            'numba_cache_exists': cache_exists,
+            'numba_jit_enabled': numba_jit_status == '0'
+        }
     })
 
 @app.route('/api/info')
@@ -309,6 +353,56 @@ def api_info():
             'high': 'Aggressive denoising (6-8 dB)',
             'advanced': 'Maximum cleaning with extreme + ultra (10-15 dB)',
             'extreme': 'EXTREME: For hard-to-understand speech (8-12 dB)'
+        }
+    })
+
+@app.route('/api/diagnostics')
+def diagnostics():
+    """System diagnostics endpoint"""
+    import platform
+    
+    numba_info = {}
+    try:
+        import numba
+        numba_info = {
+            'version': numba.__version__,
+            'cache_dir': os.environ.get('NUMBA_CACHE_DIR', 'not set'),
+            'jit_disabled': os.environ.get('NUMBA_DISABLE_JIT', '0') == '1',
+            'cache_writable': os.access(os.environ.get('NUMBA_CACHE_DIR', '/tmp'), os.W_OK)
+        }
+    except Exception as e:
+        numba_info = {'error': str(e)}
+    
+    librosa_info = {}
+    try:
+        librosa_info = {
+            'version': librosa.__version__,
+            'backend': librosa.get_samplerate.__module__ if hasattr(librosa, 'get_samplerate') else 'unknown'
+        }
+    except Exception as e:
+        librosa_info = {'error': str(e)}
+    
+    return jsonify({
+        'status': 'ok',
+        'platform': {
+            'system': platform.system(),
+            'python_version': platform.python_version(),
+            'architecture': platform.machine()
+        },
+        'libraries': {
+            'numba': numba_info,
+            'librosa': librosa_info,
+            'numpy': np.__version__,
+        },
+        'directories': {
+            'uploads': os.path.exists(app.config['UPLOAD_FOLDER']),
+            'outputs': os.path.exists(app.config['OUTPUT_FOLDER']),
+            'spectrograms': os.path.exists(app.config['SPECTROGRAMS'])
+        },
+        'environment': {
+            'PORT': os.environ.get('PORT', 'not set'),
+            'NUMBA_CACHE_DIR': os.environ.get('NUMBA_CACHE_DIR', 'not set'),
+            'NUMBA_DISABLE_JIT': os.environ.get('NUMBA_DISABLE_JIT', 'not set')
         }
     })
 

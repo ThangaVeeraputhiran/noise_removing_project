@@ -22,7 +22,14 @@ Variable Name: NUMBA_CACHE_DIR
 Value: /tmp/numba_cache
 ```
 
-#### 4. Flask App (AUTO-SET in Dockerfile, but can verify)
+#### 4. Numba JIT Control (OPTIONAL - Fallback if caching fails)
+```
+Variable Name: NUMBA_DISABLE_JIT
+Value: 0
+```
+**Note**: If you still get caching errors, try setting this to `1` (disables JIT, slower but more stable)
+
+#### 5. Flask App (AUTO-SET in Dockerfile, but can verify)
 ```
 Variable Name: FLASK_APP
 Value: app_production.py

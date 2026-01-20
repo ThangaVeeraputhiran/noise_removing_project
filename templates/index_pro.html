@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Speech Enhancement Pro - Crystal Clear Audio Processing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_pro.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/wavesurfer.js@7.3.2/dist/wavesurfer.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-microphone-alt"></i>
+                <span>AI Speech Enhancement Pro</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home"><i class="fas fa-home"></i> Home</a>
+                <a href="#features"><i class="fas fa-star"></i> Features</a>
+                <a href="#demo"><i class="fas fa-play-circle"></i> Demo</a>
+                <a href="#stats"><i class="fas fa-chart-line"></i> Stats</a>
+                <a href="#api"><i class="fas fa-code"></i> API</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="gradient-text">Professional Speech Enhancement</span>
+                <br>Powered by Advanced AI
+            </h1>
+            <p class="hero-subtitle">Transform noisy audio into crystal-clear speech with our state-of-the-art deep learning system. Up to 15 dB SNR improvement with 99% confidence.</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">99%</span>
+                    <span class="stat-label">Accuracy</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">15dB</span>
+                    <span class="stat-label">Max SNR Boost</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">4x</span>
+                    <span class="stat-label">Clarity Gain</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5</span>
+                    <span class="stat-label">Processing Modes</span>
+                </div>
+            </div>
+            <a href="#demo" class="cta-button">
+                <i class="fas fa-rocket"></i> Try It Now
+            </a>
+        </div>
+        <div class="hero-visual">
+            <canvas id="heroWaveform"></canvas>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title">Advanced Capabilities</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Noise Detection</h3>
+                    <p>Deep learning models classify noise types with 80-99% confidence across 4 categories</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Vehicle noise</li>
+                        <li><i class="fas fa-check"></i> Appliance hum</li>
+                        <li><i class="fas fa-check"></i> Voice interference</li>
+                        <li><i class="fas fa-check"></i> General background</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-wave-square"></i>
+                    </div>
+                    <h3>Spectral Enhancement</h3>
+                    <p>Advanced α=12.0 spectral subtraction with multi-stage processing</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> 4x consonant boost</li>
+                        <li><i class="fas fa-check"></i> 3.5x formant emphasis</li>
+                        <li><i class="fas fa-check"></i> Adaptive filtering</li>
+                        <li><i class="fas fa-check"></i> Dynamic range control</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Real-time Analytics</h3>
+                    <p>Comprehensive metrics and visualizations for quality assessment</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> SNR measurements</li>
+                        <li><i class="fas fa-check"></i> Spectrograms</li>
+                        <li><i class="fas fa-check"></i> Waveform comparison</li>
+                        <li><i class="fas fa-check"></i> Frequency analysis</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <h3>5-Level Processing</h3>
+                    <p>Customizable enhancement from gentle to extreme clarity</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Low: Light cleanup</li>
+                        <li><i class="fas fa-check"></i> Medium: Balanced</li>
+                        <li><i class="fas fa-check"></i> High: Aggressive</li>
+                        <li><i class="fas fa-check"></i> Advanced: Maximum</li>
+                        <li><i class="fas fa-check"></i> Extreme: Ultra-clarity</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <h2 class="section-title">Process Your Audio</h2>
+            
+            <!-- Upload Area -->
+            <div class="upload-container" id="uploadArea">
+                <div class="upload-zone" id="dropZone">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Drag & Drop Audio File</h3>
+                    <p>or click to browse</p>
+                    <input type="file" id="audioFile" accept=".wav,.mp3,.ogg,.flac,.m4a" hidden>
+                    <button class="browse-btn" onclick="document.getElementById('audioFile').click()">
+                        <i class="fas fa-folder-open"></i> Browse Files
+                    </button>
+                    <p class="formats">Supported: WAV, MP3, OGG, FLAC, M4A (Max 100MB)</p>
+                </div>
+
+                <div class="settings-panel">
+                    <h3><i class="fas fa-cog"></i> Enhancement Settings</h3>
+                    <div class="setting-group">
+                        <label for="enhancementLevel">Processing Level</label>
+                        <select id="enhancementLevel">
+                            <option value="low">🔵 Low — Gentle (2-3 dB)</option>
+                            <option value="medium">🟢 Medium — Balanced (4-5 dB)</option>
+                            <option value="high" selected>🟡 High — Strong (6-8 dB)</option>
+                            <option value="advanced">🟠 Advanced — Maximum (10-15 dB)</option>
+                            <option value="extreme">🔴 Extreme — Ultra (12+ dB)</option>
+                        </select>
+                    </div>
+                    <button class="process-btn" id="processBtn" disabled>
+                        <i class="fas fa-magic"></i> Enhance Audio
+                    </button>
+                </div>
+            </div>
+
+            <!-- Processing -->
+            <div class="processing-container hidden" id="processingArea">
+                <div class="processing-animation">
+                    <div class="audio-wave">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <h3>Processing Audio...</h3>
+                    <p id="processingStatus">Analyzing noise patterns</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="results-container hidden" id="resultsArea">
+                <div class="results-header">
+                    <h3><i class="fas fa-check-circle"></i> Enhancement Complete!</h3>
+                    <button class="reset-btn" onclick="resetProcessing()">
+                        <i class="fas fa-redo"></i> Process Another
+                    </button>
+                </div>
+
+                <!-- Audio Comparison -->
+                <div class="audio-comparison-panel">
+                    <div class="audio-panel">
+                        <h4><i class="fas fa-volume-up"></i> Original Audio</h4>
+                        <div id="waveformOriginal"></div>
+                        <audio id="audioOriginal" controls></audio>
+                        <div class="audio-metadata" id="metadataOriginal"></div>
+                    </div>
+                    <div class="comparison-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="audio-panel enhanced">
+                        <h4><i class="fas fa-star"></i> Enhanced Audio</h4>
+                        <div id="waveformEnhanced"></div>
+                        <audio id="audioEnhanced" controls></audio>
+                        <div class="audio-metadata" id="metadataEnhanced"></div>
+                    </div>
+                </div>
+
+                <!-- Metrics Dashboard -->
+                <div class="metrics-dashboard">
+                    <div class="metric-card primary">
+                        <div class="metric-icon"><i class="fas fa-signal"></i></div>
+                        <div class="metric-content">
+                            <span class="metric-label">SNR Improvement</span>
+                            <span class="metric-value" id="metricSNR">--</span>
+                        </div>
+                    </div>
+                    <div class="metric-card success">
+                        <div class="metric-icon"><i class="fas fa-percentage"></i></div>
+                        <div class="metric-content">
+                            <span class="metric-label">Detection Confidence</span>
+                            <span class="metric-value" id="metricConfidence">--</span>
+                        </div>
+                    </div>
+                    <div class="metric-card info">
+                        <div class="metric-icon"><i class="fas fa-tags"></i></div>
+                        <div class="metric-content">
+                            <span class="metric-label">Noise Category</span>
+                            <span class="metric-value" id="metricNoise">--</span>
+                        </div>
+                    </div>
+                    <div class="metric-card warning">
+                        <div class="metric-icon"><i class="fas fa-clock"></i></div>
+                        <div class="metric-content">
+                            <span class="metric-label">Duration</span>
+                            <span class="metric-value" id="metricDuration">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visualizations Tabs -->
+                <div class="viz-tabs">
+                    <button class="tab-btn active" data-tab="spectrogram"><i class="fas fa-chart-area"></i> Spectrogram</button>
+                    <button class="tab-btn" data-tab="frequency"><i class="fas fa-wave-square"></i> Frequency Analysis</button>
+                    <button class="tab-btn" data-tab="comparison"><i class="fas fa-chart-bar"></i> Before/After</button>
+                </div>
+
+                <div class="viz-content">
+                    <!-- Spectrogram Tab -->
+                    <div class="tab-panel active" id="tab-spectrogram">
+                        <h4>Spectrogram Comparison</h4>
+                        <img id="spectrogramImage" class="spectrogram-img" alt="Spectrogram">
+                        <p class="viz-description">Visual representation of frequency content over time. Darker regions indicate removed noise.</p>
+                    </div>
+
+                    <!-- Frequency Tab -->
+                    <div class="tab-panel" id="tab-frequency">
+                        <h4>Frequency Domain Analysis</h4>
+                        <canvas id="frequencyChart"></canvas>
+                        <p class="viz-description">Comparison of frequency spectrum before and after enhancement.</p>
+                    </div>
+
+                    <!-- Comparison Tab -->
+                    <div class="tab-panel" id="tab-comparison">
+                        <h4>Quality Metrics Comparison</h4>
+                        <canvas id="comparisonChart"></canvas>
+                        <p class="viz-description">Quantitative improvements across different quality metrics.</p>
+                    </div>
+                </div>
+
+                <!-- Download Section -->
+                <div class="download-section">
+                    <a id="downloadBtn" class="download-btn" download>
+                        <i class="fas fa-download"></i> Download Enhanced Audio
+                    </a>
+                    <button class="share-btn" onclick="shareResults()">
+                        <i class="fas fa-share-alt"></i> Share Results
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Display -->
+            <div class="error-container hidden" id="errorArea">
+                <div class="error-box">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Processing Error</h3>
+                    <p id="errorMessage"></p>
+                    <button class="reset-btn" onclick="resetProcessing()">
+                        <i class="fas fa-arrow-left"></i> Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats-section">
+        <div class="container">
+            <h2 class="section-title">Performance Benchmarks</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <canvas id="processingTimeChart"></canvas>
+                    <h4>Processing Speed</h4>
+                </div>
+                <div class="stat-box">
+                    <canvas id="snrImprovementChart"></canvas>
+                    <h4>SNR Improvements</h4>
+                </div>
+                <div class="stat-box">
+                    <canvas id="noiseTypesChart"></canvas>
+                    <h4>Noise Detection Accuracy</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Section -->
+    <section id="api" class="api-section">
+        <div class="container">
+            <h2 class="section-title">Developer API</h2>
+            <div class="api-grid">
+                <div class="api-card">
+                    <h3><i class="fas fa-code"></i> REST API</h3>
+                    <div class="code-block">
+                        <pre><code>POST /process
+Content-Type: multipart/form-data
+
+{
+  "audio_file": file,
+  "enhancement_level": "high"
+}</code></pre>
+                    </div>
+                    <a href="#api-docs" class="api-link">View Full Documentation →</a>
+                </div>
+                <div class="api-card">
+                    <h3><i class="fas fa-plug"></i> Browser Extension</h3>
+                    <p>Install our Chrome/Firefox extension to enhance audio directly in your browser</p>
+                    <div class="extension-buttons">
+                        <button class="ext-btn chrome">
+                            <i class="fab fa-chrome"></i> Add to Chrome
+                        </button>
+                        <button class="ext-btn firefox">
+                            <i class="fab fa-firefox"></i> Add to Firefox
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-microphone-alt"></i> AI Speech Enhancement</h4>
+                    <p>Professional-grade audio enhancement powered by advanced deep learning and signal processing.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Technology</h4>
+                    <ul>
+                        <li><i class="fab fa-python"></i> Python 3.12</li>
+                        <li><i class="fas fa-brain"></i> Deep Learning</li>
+                        <li><i class="fas fa-wave-square"></i> DSP Algorithms</li>
+                        <li><i class="fas fa-flask"></i> Flask + SciPy</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Features</h4>
+                    <ul>
+                        <li>5-Level Enhancement</li>
+                        <li>Real-time Visualization</li>
+                        <li>Browser Extension</li>
+                        <li>REST API</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AI Speech Enhancement Pro | Version 2.1 | Maximum Clarity Edition</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app_pro.js') }}"></script>
+</body>
+</html>

@@ -180,6 +180,11 @@ def index():
     """Main page"""
     return render_template('index.html')
 
+@app.route('/pro')
+def index_pro():
+    """Professional UI with advanced visualizations"""
+    return render_template('index_pro.html')
+
 @app.route('/test')
 def test():
     """Connection test page"""

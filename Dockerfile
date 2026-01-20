@@ -8,7 +8,9 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
-    FLASK_APP=app_production.py
+    FLASK_APP=app_production.py \
+    NUMBA_CACHE_DIR=/tmp/numba_cache \
+    NUMBA_DISABLE_JIT=0
 
 # Install system dependencies for audio processing
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -37,7 +39,8 @@ COPY . .
 RUN chmod +x entrypoint.sh
 
 # Create necessary directories
-RUN mkdir -p uploads outputs static/spectrograms training_data_generated && \
+RUN mkdir -p uploads outputs static/spectrograms training_data_generated /tmp/numba_cache && \
+    chmod 777 /tmp/numba_cache && \
     chown -R nobody:nogroup /app
 
 # Use non-root user for security

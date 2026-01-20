@@ -5,6 +5,11 @@ set -e
 # Get PORT from environment or default to 5000
 PORT=${PORT:-5000}
 
+# Fix numba caching issues in production
+export NUMBA_CACHE_DIR=${NUMBA_CACHE_DIR:-/tmp/numba_cache}
+export NUMBA_DISABLE_JIT=${NUMBA_DISABLE_JIT:-0}
+mkdir -p "$NUMBA_CACHE_DIR"
+
 echo "========================================="
 echo "Starting AI Speech Enhancement System v2.1"
 echo "========================================="

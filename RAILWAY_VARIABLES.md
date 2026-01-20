@@ -16,7 +16,13 @@ Variable Name: PYTHONUNBUFFERED
 Value: 1
 ```
 
-#### 3. Flask App (AUTO-SET in Dockerfile, but can verify)
+#### 3. Numba Cache Directory (REQUIRED - Fixes Librosa Error)
+```
+Variable Name: NUMBA_CACHE_DIR
+Value: /tmp/numba_cache
+```
+
+#### 4. Flask App (AUTO-SET in Dockerfile, but can verify)
 ```
 Variable Name: FLASK_APP
 Value: app_production.py
@@ -49,6 +55,7 @@ RAILWAY_HEALTHCHECK_TIMEOUT_SEC=300
 
 - [x] Set `RAILWAY_HEALTHCHECK_TIMEOUT_SEC=300`
 - [x] Set `PYTHONUNBUFFERED=1`
+- [x] Set `NUMBA_CACHE_DIR=/tmp/numba_cache` (fixes librosa caching error)
 - [x] Healthcheck path is `/health`
 - [x] Commit and push code changes
 - [x] Wait for Railway to auto-deploy

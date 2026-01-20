@@ -11,16 +11,24 @@ echo "========================================="
 echo "PORT: $PORT"
 echo "Environment: Production"
 echo "Python: $(python --version)"
+echo "Directory: $(pwd)"
 echo "========================================="
 
-# Run gunicorn with proper error handling
+# Create necessary directories
+mkdir -p uploads outputs static/spectrograms
+
+# Run gunicorn with optimized settings for Railway
+# Removed --preload-app for faster startup and better healthcheck response
 exec gunicorn \
     --bind 0.0.0.0:${PORT} \
-    --workers 2 \
-    --worker-class sync \
-    --timeout 120 \
+    --workers 1 \
+    --threads 2 \
+    --worker-class gthread \
+    --timeout 300 \
+    --graceful-timeout 30 \
+    --keep-alive 5 \
     --access-logfile - \
     --error-logfile - \
-    --preload-app \
     --log-level info \
+    --capture-output \
     app_production:app
